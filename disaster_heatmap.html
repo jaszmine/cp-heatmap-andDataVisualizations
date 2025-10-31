@@ -1,0 +1,3177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2521937de9f2199f06662c87e18bc1da {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+    <h3 align="center" style="font-size:20px"><b>Disaster Event Intensity Heatmap</b></h3>
+    <p align="center">Color intensity represents combined severity and confidence</p>
+    <p align="center">Click on colored circles to see individual event details</p>
+    
+    
+    <div style="position: fixed; 
+                top: 10px; left: 50px; width: 280px; height: 200px; 
+                background-color: white; border:2px solid grey; z-index:9999; 
+                font-size:14px; padding: 10px">
+    <p><b>Heatmap Intensity Legend</b></p>
+    <p><span style="background: linear-gradient(to right, blue, cyan, lime, yellow, red); 
+                    display: block; height: 20px; width: 100%;"></span></p>
+    <p>Low ← Intensity → High</p>
+    <p>Intensity = Severity × Confidence</p>
+    <p><b>Marker Colors:</b><br>
+    🔴 Fire ⚫ Shooting 🔵 Flood<br>
+    🟠 Earthquake 🟣 Auto Accident</p>
+    </div>
+    
+    
+            <div class="folium-map" id="map_2521937de9f2199f06662c87e18bc1da" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2521937de9f2199f06662c87e18bc1da = L.map(
+                "map_2521937de9f2199f06662c87e18bc1da",
+                {
+                    center: [35.89285035274725, -87.9245012813187],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_147465a16d4105adb9f7f1aaccded3a4 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_147465a16d4105adb9f7f1aaccded3a4.addTo(map_2521937de9f2199f06662c87e18bc1da);
+        
+    
+            var heat_map_74c2dc27c538da6164fcceef1a5e5d30 = L.heatLayer(
+                [[36.7014631, -118.755997, 0.5249999999999999], [34.0522, -118.2437, 0.95], [35.6311, -82.5526, 0.595], [40.8656144, -80.9481441, 0.595], [33.9510011, -118.2062682, 0.595], [36.7014631, -118.755997, 0.595], [39.7392, -104.9847, 0.644], [29.6411884, -82.3562296, 0.595], [39.0997, -94.5786, 0.95], [39.0997, -94.5786, 0.95], [34.0522, -118.2437, 0.92], [34.0522, -118.2437, 0.63], [20.7373, -156.4667, 0.95], [38.7251776, -105.607716, 0.95], [31.5197847, 35.0494777, 0.85], [51.5381151, -1.7770273, 0.85], [43.100231, -73.581963, 0.95], [35.0, -102.0, 0.92], [-34.040147, 18.8507608, 0.85], [41.8781, -87.6298, 0.92], [34.5802074, -105.996047, 0.95], [39.0997, -94.5786, 0.95], [40.384263, -74.089879, 0.95], [40.1877, -75.1966, 0.95], [42.3788774, -72.032366, 0.38], [31.5240794, 34.4432833, 0.92], [55.7558, 37.6176, 0.95], [29.9509, -81.4776, 0.95], [55.7558, 37.6176, 0.95], [39.2904, -76.6122, 0.95], [31.5, 34.4667, 0.92], [39.2904, -76.6122, 0.85], [64.1286583, -21.8649883, 0.85], [40.7128, -74.006, 0.38], [32.8197674, 34.9979392, 0.92], [44.4769, -73.2114, 0.644], [12.8611, 32.0667, 0.92], [47.3138746, 5.0488196, 0.85], [34.0689, -118.4452, 0.85], [38.5110803, -122.8473388, 0.34], [32.1659, -82.9001, 0.95], [27.7567667, -81.4639835, 0.95], [44.5624, -70.4508, 0.95], [48.1371, 11.5754, 0.95], [10.37532, -85.1223097, 0.95], [36.1699, -115.1398, 0.95], [34.0522, -118.2437, 0.92], [34.0522, -118.2437, 0.85], [34.0522, -118.2437, 0.92], [34.0522, -118.2437, 0.595], [36.7783, -121.4936, 0.92], [34.0522, -118.2437, 0.92], [34.0522, -118.2437, 0.595], [36.1627, -86.7711, 0.95], [34.0522, -118.2437, 0.92], [34.2136, -118.2851, 0.92], [39.1143, -77.5314, 0.92], [34.0333, -118.476, 0.95], [34.0522, -118.2437, 0.85], [39.100105, -94.5781416, 0.5249999999999999], [34.0522, -118.2437, 0.92], [42.1965, -71.1097, 0.595], [42.7307, -71.4833, 0.644], [42.4075, -70.9646, 0.95], [41.7962409, -71.5992372, 0.95], [39.7990175, -89.6439575, 0.644], [27.7663, -97.6673, 0.92], [36.7014631, -118.755997, 0.595], [34.2713, -118.7972, 0.595], [34.0522, -118.2437, 0.95], [33.9510011, -118.2062682, 0.92], [36.7783, -119.4179, 0.92], [34.0522, -118.2437, 0.95], [34.0522, -118.2437, 0.92], [36.7014631, -118.755997, 0.595], [34.1521, -118.134, 0.95], [34.0362, -118.4764, 0.95], [36.7014631, -118.755997, 0.595], [34.0522, -118.2437, 0.92], [36.7014631, -118.755997, 0.95], [36.7783, -119.4179, 0.92], [34.03, -118.49, 0.95], [34.0522, -118.2437, 0.95], [32.8542, -117.2086, 0.38], [34.2176371, -119.0383541, 0.6649999999999999], [36.7014631, -118.755997, 0.595], [34.2176371, -119.0383541, 0.63], [39.2490157, -121.030051, 0.26], [36.1699, -119.7428, 0.595], [36.7014631, -118.755997, 0.5249999999999999], [36.7014631, -118.755997, 0.595]],
+                {
+  "minOpacity": 0.3,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 20,
+  "gradient": {
+  0.0: "blue",
+  0.3: "cyan",
+  0.5: "lime",
+  0.7: "yellow",
+  0.9: "red",
+},
+  "maxOpacity": 0.8,
+}
+            );
+        
+    
+            heat_map_74c2dc27c538da6164fcceef1a5e5d30.addTo(map_2521937de9f2199f06662c87e18bc1da);
+        
+    
+            var feature_group_b103d20b1fdcffb73d97e8401fa2ecc1 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_8d2b439f8b6ccc695e006974b4d3bf4b = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_48452a803891a858cb9120af5f09233d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7dd28035b5397fa68ccfb764056fe8c9 = $(`<div id="html_7dd28035b5397fa68ccfb764056fe8c9" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.750<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.525                 </div>                 </div>`)[0];
+                popup_48452a803891a858cb9120af5f09233d.setContent(html_7dd28035b5397fa68ccfb764056fe8c9);
+            
+        
+
+        circle_marker_8d2b439f8b6ccc695e006974b4d3bf4b.bindPopup(popup_48452a803891a858cb9120af5f09233d)
+        ;
+
+        
+    
+    
+            circle_marker_8d2b439f8b6ccc695e006974b4d3bf4b.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5e4a9cea49ec7370bc62b7ac09597d5e = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_803236c05ad652453695027cbdd9f100 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f3b8df6dbd1e757495608c15ac57e7e4 = $(`<div id="html_f3b8df6dbd1e757495608c15ac57e7e4" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> severe_storm<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> LA County<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_803236c05ad652453695027cbdd9f100.setContent(html_f3b8df6dbd1e757495608c15ac57e7e4);
+            
+        
+
+        circle_marker_5e4a9cea49ec7370bc62b7ac09597d5e.bindPopup(popup_803236c05ad652453695027cbdd9f100)
+        ;
+
+        
+    
+    
+            circle_marker_5e4a9cea49ec7370bc62b7ac09597d5e.bindTooltip(
+                `<div>
+                     severe_storm - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ad636f026212933375be543313d2cdb8 = L.circleMarker(
+                [35.6311, -82.5526],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_b1569e64068150853bbe8ee5f195e4dd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f13429dd8a1823148021b0f981de7876 = $(`<div id="html_f13429dd8a1823148021b0f981de7876" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Asheville, North Carolina<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_b1569e64068150853bbe8ee5f195e4dd.setContent(html_f13429dd8a1823148021b0f981de7876);
+            
+        
+
+        circle_marker_ad636f026212933375be543313d2cdb8.bindPopup(popup_b1569e64068150853bbe8ee5f195e4dd)
+        ;
+
+        
+    
+    
+            circle_marker_ad636f026212933375be543313d2cdb8.bindTooltip(
+                `<div>
+                     other_disaster - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dec6a53936ca1e296feefd21d31dcee6 = L.circleMarker(
+                [40.8656144, -80.9481441],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_098229d88c0ffa558cf6f60feedd0fd2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fa12b90a8b87cece5eaec8f1b9bcafe6 = $(`<div id="html_fa12b90a8b87cece5eaec8f1b9bcafe6" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> flood<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Ohio Valley<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_098229d88c0ffa558cf6f60feedd0fd2.setContent(html_fa12b90a8b87cece5eaec8f1b9bcafe6);
+            
+        
+
+        circle_marker_dec6a53936ca1e296feefd21d31dcee6.bindPopup(popup_098229d88c0ffa558cf6f60feedd0fd2)
+        ;
+
+        
+    
+    
+            circle_marker_dec6a53936ca1e296feefd21d31dcee6.bindTooltip(
+                `<div>
+                     flood - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bfeb09f9800130b64cb12c45c8aee6d5 = L.circleMarker(
+                [33.9510011, -118.2062682],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_cdf274734638841d3e8ac12ef417e7c6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9ba7465c6be1728daccc8364a7e910a8 = $(`<div id="html_9ba7465c6be1728daccc8364a7e910a8" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Southern California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_cdf274734638841d3e8ac12ef417e7c6.setContent(html_9ba7465c6be1728daccc8364a7e910a8);
+            
+        
+
+        circle_marker_bfeb09f9800130b64cb12c45c8aee6d5.bindPopup(popup_cdf274734638841d3e8ac12ef417e7c6)
+        ;
+
+        
+    
+    
+            circle_marker_bfeb09f9800130b64cb12c45c8aee6d5.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_57201c4733bbc0f9d4955a20a9ddf88a = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_920744341928ea45154401d93464f1df = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_acaa7db0e5ece54b7122dddabe21925e = $(`<div id="html_acaa7db0e5ece54b7122dddabe21925e" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_920744341928ea45154401d93464f1df.setContent(html_acaa7db0e5ece54b7122dddabe21925e);
+            
+        
+
+        circle_marker_57201c4733bbc0f9d4955a20a9ddf88a.bindPopup(popup_920744341928ea45154401d93464f1df)
+        ;
+
+        
+    
+    
+            circle_marker_57201c4733bbc0f9d4955a20a9ddf88a.bindTooltip(
+                `<div>
+                     other_disaster - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2cde0d39919082886de310e44efd6556 = L.circleMarker(
+                [39.7392, -104.9847],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_a7f7b5d5c7bfc7ecbfde688c363b09be = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0afed4196b14583ca5da91de24802435 = $(`<div id="html_0afed4196b14583ca5da91de24802435" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> auto_accident<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> E. Louisiana Ave and S. Race Street, Denver<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.644                 </div>                 </div>`)[0];
+                popup_a7f7b5d5c7bfc7ecbfde688c363b09be.setContent(html_0afed4196b14583ca5da91de24802435);
+            
+        
+
+        circle_marker_2cde0d39919082886de310e44efd6556.bindPopup(popup_a7f7b5d5c7bfc7ecbfde688c363b09be)
+        ;
+
+        
+    
+    
+            circle_marker_2cde0d39919082886de310e44efd6556.bindTooltip(
+                `<div>
+                     auto_accident - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5476775e4d7e50c7a23b54a6241c5080 = L.circleMarker(
+                [29.6411884, -82.3562296],
+                {"bubblingMouseEvents": true, "color": "cyan", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "cyan", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_80771515332b8eb90bf93a844282874a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_80f37a28199f1fdf56a2ff15b2a39e1f = $(`<div id="html_80f37a28199f1fdf56a2ff15b2a39e1f" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> hurricane<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> University of Florida<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_80771515332b8eb90bf93a844282874a.setContent(html_80f37a28199f1fdf56a2ff15b2a39e1f);
+            
+        
+
+        circle_marker_5476775e4d7e50c7a23b54a6241c5080.bindPopup(popup_80771515332b8eb90bf93a844282874a)
+        ;
+
+        
+    
+    
+            circle_marker_5476775e4d7e50c7a23b54a6241c5080.bindTooltip(
+                `<div>
+                     hurricane - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_60e1921d9cfddf99dbe9b3bdb6c04653 = L.circleMarker(
+                [39.0997, -94.5786],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_c58984fb45b40365bf6ab03539b7b061 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7d4a4927771e3607aa9a7a5c3f70773f = $(`<div id="html_7d4a4927771e3607aa9a7a5c3f70773f" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Kansas City<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_c58984fb45b40365bf6ab03539b7b061.setContent(html_7d4a4927771e3607aa9a7a5c3f70773f);
+            
+        
+
+        circle_marker_60e1921d9cfddf99dbe9b3bdb6c04653.bindPopup(popup_c58984fb45b40365bf6ab03539b7b061)
+        ;
+
+        
+    
+    
+            circle_marker_60e1921d9cfddf99dbe9b3bdb6c04653.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b431d636421e9018d4c4cacdb464bb97 = L.circleMarker(
+                [39.0997, -94.5786],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_8bf8d1125aaebceb6874673e63678826 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_40c87630eef02519b245069bd3f78f80 = $(`<div id="html_40c87630eef02519b245069bd3f78f80" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Kansas City<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_8bf8d1125aaebceb6874673e63678826.setContent(html_40c87630eef02519b245069bd3f78f80);
+            
+        
+
+        circle_marker_b431d636421e9018d4c4cacdb464bb97.bindPopup(popup_8bf8d1125aaebceb6874673e63678826)
+        ;
+
+        
+    
+    
+            circle_marker_b431d636421e9018d4c4cacdb464bb97.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_935c17cf321a6705febcb942951c1868 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_b619d8d8a244fb3c2996d0d8e8beb271 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bdda8bbcb249b66be06d50ef5d7f5fd7 = $(`<div id="html_bdda8bbcb249b66be06d50ef5d7f5fd7" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> flood<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Southern California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_b619d8d8a244fb3c2996d0d8e8beb271.setContent(html_bdda8bbcb249b66be06d50ef5d7f5fd7);
+            
+        
+
+        circle_marker_935c17cf321a6705febcb942951c1868.bindPopup(popup_b619d8d8a244fb3c2996d0d8e8beb271)
+        ;
+
+        
+    
+    
+            circle_marker_935c17cf321a6705febcb942951c1868.bindTooltip(
+                `<div>
+                     flood - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1939fe65dd6b25ca84dceeddf8ec54c6 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_64918b2ae298b562a95ea0866a611501 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0c92bf2ea749366c5f13b5afe904dece = $(`<div id="html_0c92bf2ea749366c5f13b5afe904dece" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> flood<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.900<br>                     <b>Location:</b> L.A. County<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.630                 </div>                 </div>`)[0];
+                popup_64918b2ae298b562a95ea0866a611501.setContent(html_0c92bf2ea749366c5f13b5afe904dece);
+            
+        
+
+        circle_marker_1939fe65dd6b25ca84dceeddf8ec54c6.bindPopup(popup_64918b2ae298b562a95ea0866a611501)
+        ;
+
+        
+    
+    
+            circle_marker_1939fe65dd6b25ca84dceeddf8ec54c6.bindTooltip(
+                `<div>
+                     flood - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9797fbb5088fdd617c76221c77ae98c3 = L.circleMarker(
+                [20.7373, -156.4667],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_d911fd5607018ab60563c79f81fcc104 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b7ff27eb1de1961973c7b85a049a88fb = $(`<div id="html_b7ff27eb1de1961973c7b85a049a88fb" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Lahaina and Kula<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_d911fd5607018ab60563c79f81fcc104.setContent(html_b7ff27eb1de1961973c7b85a049a88fb);
+            
+        
+
+        circle_marker_9797fbb5088fdd617c76221c77ae98c3.bindPopup(popup_d911fd5607018ab60563c79f81fcc104)
+        ;
+
+        
+    
+    
+            circle_marker_9797fbb5088fdd617c76221c77ae98c3.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_448b5b86ca1307182d28325c46d2a279 = L.circleMarker(
+                [38.7251776, -105.607716],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_9ad2b2279fb2089f89c6beff55be3332 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_950699f563b5489ad39dcfaf086b69a7 = $(`<div id="html_950699f563b5489ad39dcfaf086b69a7" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Colorado<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_9ad2b2279fb2089f89c6beff55be3332.setContent(html_950699f563b5489ad39dcfaf086b69a7);
+            
+        
+
+        circle_marker_448b5b86ca1307182d28325c46d2a279.bindPopup(popup_9ad2b2279fb2089f89c6beff55be3332)
+        ;
+
+        
+    
+    
+            circle_marker_448b5b86ca1307182d28325c46d2a279.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dac802f80fdc5316af6452ed5d234e75 = L.circleMarker(
+                [31.5197847, 35.0494777],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_13c1c1e13c35862ef44bfb756467cc25 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b0b16acfc9d67788369cf67bf3d00b31 = $(`<div id="html_b0b16acfc9d67788369cf67bf3d00b31" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Palestinian<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_13c1c1e13c35862ef44bfb756467cc25.setContent(html_b0b16acfc9d67788369cf67bf3d00b31);
+            
+        
+
+        circle_marker_dac802f80fdc5316af6452ed5d234e75.bindPopup(popup_13c1c1e13c35862ef44bfb756467cc25)
+        ;
+
+        
+    
+    
+            circle_marker_dac802f80fdc5316af6452ed5d234e75.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6347122fde8ba2cdb2dc848d70e8298f = L.circleMarker(
+                [51.5381151, -1.7770273],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_2610abd61578d26e1f55a8736c6ffdf4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_939afa2829463c844eba0876ca25527c = $(`<div id="html_939afa2829463c844eba0876ca25527c" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> nationwide<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_2610abd61578d26e1f55a8736c6ffdf4.setContent(html_939afa2829463c844eba0876ca25527c);
+            
+        
+
+        circle_marker_6347122fde8ba2cdb2dc848d70e8298f.bindPopup(popup_2610abd61578d26e1f55a8736c6ffdf4)
+        ;
+
+        
+    
+    
+            circle_marker_6347122fde8ba2cdb2dc848d70e8298f.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f77e435c0cd2636ea3337d81f3aa76f2 = L.circleMarker(
+                [43.100231, -73.581963],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_fcf815eaf57b576a2fcbd49f9a641c36 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_47cfa36314459b273d02394596dce751 = $(`<div id="html_47cfa36314459b273d02394596dce751" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Schuylerville<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_fcf815eaf57b576a2fcbd49f9a641c36.setContent(html_47cfa36314459b273d02394596dce751);
+            
+        
+
+        circle_marker_f77e435c0cd2636ea3337d81f3aa76f2.bindPopup(popup_fcf815eaf57b576a2fcbd49f9a641c36)
+        ;
+
+        
+    
+    
+            circle_marker_f77e435c0cd2636ea3337d81f3aa76f2.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7cf05d4af6b45057d58d4f88dba87d21 = L.circleMarker(
+                [35.0, -102.0],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_a76eea7700300af2098c74d391e7d95a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_70f9c528cdf70092f20892efe982fd52 = $(`<div id="html_70f9c528cdf70092f20892efe982fd52" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Texas Panhandle<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_a76eea7700300af2098c74d391e7d95a.setContent(html_70f9c528cdf70092f20892efe982fd52);
+            
+        
+
+        circle_marker_7cf05d4af6b45057d58d4f88dba87d21.bindPopup(popup_a76eea7700300af2098c74d391e7d95a)
+        ;
+
+        
+    
+    
+            circle_marker_7cf05d4af6b45057d58d4f88dba87d21.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0475212d636ecd216fbd1dc0ef942f3a = L.circleMarker(
+                [-34.040147, 18.8507608],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_de0002e04fc14e19b7faf1f95ee7a80f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e5b5d8905604386397acc00a1022c63e = $(`<div id="html_e5b5d8905604386397acc00a1022c63e" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Mexican border<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_de0002e04fc14e19b7faf1f95ee7a80f.setContent(html_e5b5d8905604386397acc00a1022c63e);
+            
+        
+
+        circle_marker_0475212d636ecd216fbd1dc0ef942f3a.bindPopup(popup_de0002e04fc14e19b7faf1f95ee7a80f)
+        ;
+
+        
+    
+    
+            circle_marker_0475212d636ecd216fbd1dc0ef942f3a.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7b124e41a501add1d411e6db45f9058c = L.circleMarker(
+                [41.8781, -87.6298],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_58449b2efecb40ba7568251a29551520 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b514a805b8a2c5e423adf9eb4aa72926 = $(`<div id="html_b514a805b8a2c5e423adf9eb4aa72926" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Chicago<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_58449b2efecb40ba7568251a29551520.setContent(html_b514a805b8a2c5e423adf9eb4aa72926);
+            
+        
+
+        circle_marker_7b124e41a501add1d411e6db45f9058c.bindPopup(popup_58449b2efecb40ba7568251a29551520)
+        ;
+
+        
+    
+    
+            circle_marker_7b124e41a501add1d411e6db45f9058c.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9ef39f231eed17d577d779ffa1d743ec = L.circleMarker(
+                [34.5802074, -105.996047],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_5632d80b5196b763f33e6a4b931591bb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_07ceb48f1cc9e8eba870503cfe9c2267 = $(`<div id="html_07ceb48f1cc9e8eba870503cfe9c2267" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> New Mexico<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_5632d80b5196b763f33e6a4b931591bb.setContent(html_07ceb48f1cc9e8eba870503cfe9c2267);
+            
+        
+
+        circle_marker_9ef39f231eed17d577d779ffa1d743ec.bindPopup(popup_5632d80b5196b763f33e6a4b931591bb)
+        ;
+
+        
+    
+    
+            circle_marker_9ef39f231eed17d577d779ffa1d743ec.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e6000124b768cc423a8adb627584f82c = L.circleMarker(
+                [39.0997, -94.5786],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_9a87fd24418a0f7226695a671a1704ed = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5a1a5f776c8dbc6be4901672d58b383f = $(`<div id="html_5a1a5f776c8dbc6be4901672d58b383f" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Kansas City<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_9a87fd24418a0f7226695a671a1704ed.setContent(html_5a1a5f776c8dbc6be4901672d58b383f);
+            
+        
+
+        circle_marker_e6000124b768cc423a8adb627584f82c.bindPopup(popup_9a87fd24418a0f7226695a671a1704ed)
+        ;
+
+        
+    
+    
+            circle_marker_e6000124b768cc423a8adb627584f82c.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ec89504ab1abec928b7d417e83182e6e = L.circleMarker(
+                [40.384263, -74.089879],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_5f7d72ec9e4ade22ce4df5b0f042635e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_addc8988f2471e34c59b6f1ee5af6b37 = $(`<div id="html_addc8988f2471e34c59b6f1ee5af6b37" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Middletown Township<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_5f7d72ec9e4ade22ce4df5b0f042635e.setContent(html_addc8988f2471e34c59b6f1ee5af6b37);
+            
+        
+
+        circle_marker_ec89504ab1abec928b7d417e83182e6e.bindPopup(popup_5f7d72ec9e4ade22ce4df5b0f042635e)
+        ;
+
+        
+    
+    
+            circle_marker_ec89504ab1abec928b7d417e83182e6e.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a3ca8a3d616924c0f069098f56aa41d2 = L.circleMarker(
+                [40.1877, -75.1966],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_c3b564ea5c36abea9be9dfdafbf12dc8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_17982b717e4fe0ee9442054671f5f625 = $(`<div id="html_17982b717e4fe0ee9442054671f5f625" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Falls Township, Pennsylvania<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_c3b564ea5c36abea9be9dfdafbf12dc8.setContent(html_17982b717e4fe0ee9442054671f5f625);
+            
+        
+
+        circle_marker_a3ca8a3d616924c0f069098f56aa41d2.bindPopup(popup_c3b564ea5c36abea9be9dfdafbf12dc8)
+        ;
+
+        
+    
+    
+            circle_marker_a3ca8a3d616924c0f069098f56aa41d2.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dcf6560b9544aacf3170fff4ad617ef7 = L.circleMarker(
+                [42.3788774, -72.032366],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_519834fff8aa866e6ca6bf5be45c4d14 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_de3d6d561547fb0848c5bc55458221af = $(`<div id="html_de3d6d561547fb0848c5bc55458221af" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> not_relevant<br>                     <b>Severity:</b> low<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Massachusetts<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.380                 </div>                 </div>`)[0];
+                popup_519834fff8aa866e6ca6bf5be45c4d14.setContent(html_de3d6d561547fb0848c5bc55458221af);
+            
+        
+
+        circle_marker_dcf6560b9544aacf3170fff4ad617ef7.bindPopup(popup_519834fff8aa866e6ca6bf5be45c4d14)
+        ;
+
+        
+    
+    
+            circle_marker_dcf6560b9544aacf3170fff4ad617ef7.bindTooltip(
+                `<div>
+                     not_relevant - low severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7745f950f8026c6328f150d88e0619d0 = L.circleMarker(
+                [31.5240794, 34.4432833],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_4e90c082f12ed86a1a126e6798b8baae = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_330664f9f2e464db8402cde37c8557e0 = $(`<div id="html_330664f9f2e464db8402cde37c8557e0" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Gaza, Al-Shifa Hospital<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_4e90c082f12ed86a1a126e6798b8baae.setContent(html_330664f9f2e464db8402cde37c8557e0);
+            
+        
+
+        circle_marker_7745f950f8026c6328f150d88e0619d0.bindPopup(popup_4e90c082f12ed86a1a126e6798b8baae)
+        ;
+
+        
+    
+    
+            circle_marker_7745f950f8026c6328f150d88e0619d0.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3b4904635496efbcb70685ff4d6a7f42 = L.circleMarker(
+                [55.7558, 37.6176],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_1dce9136d134af530f97ca2465389461 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c6f7fdac77f53a6217ca6d3abc896628 = $(`<div id="html_c6f7fdac77f53a6217ca6d3abc896628" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Moscow<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_1dce9136d134af530f97ca2465389461.setContent(html_c6f7fdac77f53a6217ca6d3abc896628);
+            
+        
+
+        circle_marker_3b4904635496efbcb70685ff4d6a7f42.bindPopup(popup_1dce9136d134af530f97ca2465389461)
+        ;
+
+        
+    
+    
+            circle_marker_3b4904635496efbcb70685ff4d6a7f42.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8e17ae7e8361ce0f417cb15fa8aba9dc = L.circleMarker(
+                [29.9509, -81.4776],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_483d01d624856cae8621cb279360dbec = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7f0d95d57e23dfbcc1508e5a3d1e98c2 = $(`<div id="html_7f0d95d57e23dfbcc1508e5a3d1e98c2" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Parkland, Fla.<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_483d01d624856cae8621cb279360dbec.setContent(html_7f0d95d57e23dfbcc1508e5a3d1e98c2);
+            
+        
+
+        circle_marker_8e17ae7e8361ce0f417cb15fa8aba9dc.bindPopup(popup_483d01d624856cae8621cb279360dbec)
+        ;
+
+        
+    
+    
+            circle_marker_8e17ae7e8361ce0f417cb15fa8aba9dc.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f342252b3196ea448e00afd0b5d0a3e5 = L.circleMarker(
+                [55.7558, 37.6176],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_6ff9c05706cd9b012728514404c8c23c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_46973a488d5bcd661e3cbf3e2e001c2c = $(`<div id="html_46973a488d5bcd661e3cbf3e2e001c2c" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Moscow<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_6ff9c05706cd9b012728514404c8c23c.setContent(html_46973a488d5bcd661e3cbf3e2e001c2c);
+            
+        
+
+        circle_marker_f342252b3196ea448e00afd0b5d0a3e5.bindPopup(popup_6ff9c05706cd9b012728514404c8c23c)
+        ;
+
+        
+    
+    
+            circle_marker_f342252b3196ea448e00afd0b5d0a3e5.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_45827719eb0ed6a3fc0d867d64504d9c = L.circleMarker(
+                [39.2904, -76.6122],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_d8704cf35b3afd50b0b992dfd7d35894 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ae7f22fe22e275bf0347dfef45efa54b = $(`<div id="html_ae7f22fe22e275bf0347dfef45efa54b" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> auto_accident<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Baltimore<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_d8704cf35b3afd50b0b992dfd7d35894.setContent(html_ae7f22fe22e275bf0347dfef45efa54b);
+            
+        
+
+        circle_marker_45827719eb0ed6a3fc0d867d64504d9c.bindPopup(popup_d8704cf35b3afd50b0b992dfd7d35894)
+        ;
+
+        
+    
+    
+            circle_marker_45827719eb0ed6a3fc0d867d64504d9c.bindTooltip(
+                `<div>
+                     auto_accident - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6d3c6e9f8b8ae7ca3fad6de44e99f751 = L.circleMarker(
+                [31.5, 34.4667],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_85ca2c5719432cddd6fec783ea72278f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_57833d808a91a5a9197002b66539f4ea = $(`<div id="html_57833d808a91a5a9197002b66539f4ea" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Gaza<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_85ca2c5719432cddd6fec783ea72278f.setContent(html_57833d808a91a5a9197002b66539f4ea);
+            
+        
+
+        circle_marker_6d3c6e9f8b8ae7ca3fad6de44e99f751.bindPopup(popup_85ca2c5719432cddd6fec783ea72278f)
+        ;
+
+        
+    
+    
+            circle_marker_6d3c6e9f8b8ae7ca3fad6de44e99f751.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c7a24aeabf9efd972367ede658370e17 = L.circleMarker(
+                [39.2904, -76.6122],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_491d494a7f11ec735b0a4887de3996d0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8f8a40df3cd6fe9f10349baf914fcee4 = $(`<div id="html_8f8a40df3cd6fe9f10349baf914fcee4" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Baltimore<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_491d494a7f11ec735b0a4887de3996d0.setContent(html_8f8a40df3cd6fe9f10349baf914fcee4);
+            
+        
+
+        circle_marker_c7a24aeabf9efd972367ede658370e17.bindPopup(popup_491d494a7f11ec735b0a4887de3996d0)
+        ;
+
+        
+    
+    
+            circle_marker_c7a24aeabf9efd972367ede658370e17.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_01ce754d2628a20e1e2dc2898aaa1e95 = L.circleMarker(
+                [64.1286583, -21.8649883],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_8f86b613122c8b1e98475be0a3185c81 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e55599ee3166e17c6e5d55fe37fbb650 = $(`<div id="html_e55599ee3166e17c6e5d55fe37fbb650" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> earthquake<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Asian island<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_8f86b613122c8b1e98475be0a3185c81.setContent(html_e55599ee3166e17c6e5d55fe37fbb650);
+            
+        
+
+        circle_marker_01ce754d2628a20e1e2dc2898aaa1e95.bindPopup(popup_8f86b613122c8b1e98475be0a3185c81)
+        ;
+
+        
+    
+    
+            circle_marker_01ce754d2628a20e1e2dc2898aaa1e95.bindTooltip(
+                `<div>
+                     earthquake - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a017b1359d6ac8fc127032398f8d2244 = L.circleMarker(
+                [40.7128, -74.006],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_f2401109d53bfdd1037c82396baf6468 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d152f94ab25ff52588fa981e5332af7d = $(`<div id="html_d152f94ab25ff52588fa981e5332af7d" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> earthquake<br>                     <b>Severity:</b> low<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> New York City and North Jersey<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.380                 </div>                 </div>`)[0];
+                popup_f2401109d53bfdd1037c82396baf6468.setContent(html_d152f94ab25ff52588fa981e5332af7d);
+            
+        
+
+        circle_marker_a017b1359d6ac8fc127032398f8d2244.bindPopup(popup_f2401109d53bfdd1037c82396baf6468)
+        ;
+
+        
+    
+    
+            circle_marker_a017b1359d6ac8fc127032398f8d2244.bindTooltip(
+                `<div>
+                     earthquake - low severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1df40d200fbc460815b0c271c25f733f = L.circleMarker(
+                [32.8197674, 34.9979392],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_31197a377c33ff3941a1b00cb18891f8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dcce6aa4dd3a843cf6c80f9098f5ee82 = $(`<div id="html_dcce6aa4dd3a843cf6c80f9098f5ee82" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Gaza City<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_31197a377c33ff3941a1b00cb18891f8.setContent(html_dcce6aa4dd3a843cf6c80f9098f5ee82);
+            
+        
+
+        circle_marker_1df40d200fbc460815b0c271c25f733f.bindPopup(popup_31197a377c33ff3941a1b00cb18891f8)
+        ;
+
+        
+    
+    
+            circle_marker_1df40d200fbc460815b0c271c25f733f.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_51e72e75e0313f602f678a09ffc5d524 = L.circleMarker(
+                [44.4769, -73.2114],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_984468b0afb174e4bb28ec84798c488b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_510267362fd694e6527cb28a8e848501 = $(`<div id="html_510267362fd694e6527cb28a8e848501" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Burlington, Vt.<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.644                 </div>                 </div>`)[0];
+                popup_984468b0afb174e4bb28ec84798c488b.setContent(html_510267362fd694e6527cb28a8e848501);
+            
+        
+
+        circle_marker_51e72e75e0313f602f678a09ffc5d524.bindPopup(popup_984468b0afb174e4bb28ec84798c488b)
+        ;
+
+        
+    
+    
+            circle_marker_51e72e75e0313f602f678a09ffc5d524.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e54f9665992a999ceb939471d866592e = L.circleMarker(
+                [12.8611, 32.0667],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_bb672acfdee9ffb48c1ed379d0939e73 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_86a4f6ac5e87a857bde0162e0883684d = $(`<div id="html_86a4f6ac5e87a857bde0162e0883684d" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Sudan<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_bb672acfdee9ffb48c1ed379d0939e73.setContent(html_86a4f6ac5e87a857bde0162e0883684d);
+            
+        
+
+        circle_marker_e54f9665992a999ceb939471d866592e.bindPopup(popup_bb672acfdee9ffb48c1ed379d0939e73)
+        ;
+
+        
+    
+    
+            circle_marker_e54f9665992a999ceb939471d866592e.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_08ae38607a89929a517b90ed156a3a59 = L.circleMarker(
+                [47.3138746, 5.0488196],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkred", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_cd819ce6c214da3e8734589b37086015 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9282eb3b2279bf2d1a296affedd50560 = $(`<div id="html_9282eb3b2279bf2d1a296affedd50560" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> extreme_heat<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> West Africa<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_cd819ce6c214da3e8734589b37086015.setContent(html_9282eb3b2279bf2d1a296affedd50560);
+            
+        
+
+        circle_marker_08ae38607a89929a517b90ed156a3a59.bindPopup(popup_cd819ce6c214da3e8734589b37086015)
+        ;
+
+        
+    
+    
+            circle_marker_08ae38607a89929a517b90ed156a3a59.bindTooltip(
+                `<div>
+                     extreme_heat - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_570095f1f8eb32eea36ff97ee5e162e8 = L.circleMarker(
+                [34.0689, -118.4452],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_b927ce02d70917dd4489167c13b65543 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1a1a06474c20269c8a88609a4b357f64 = $(`<div id="html_1a1a06474c20269c8a88609a4b357f64" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> UCLA<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_b927ce02d70917dd4489167c13b65543.setContent(html_1a1a06474c20269c8a88609a4b357f64);
+            
+        
+
+        circle_marker_570095f1f8eb32eea36ff97ee5e162e8.bindPopup(popup_b927ce02d70917dd4489167c13b65543)
+        ;
+
+        
+    
+    
+            circle_marker_570095f1f8eb32eea36ff97ee5e162e8.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e7c8edfabd1caed5bdb0f130d2f6007e = L.circleMarker(
+                [38.5110803, -122.8473388],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_925178b4806f5335af4a32b810a27940 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_97118f0d34d7ac4ac5577816773b543d = $(`<div id="html_97118f0d34d7ac4ac5577816773b543d" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> low<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Sonoma County<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.340                 </div>                 </div>`)[0];
+                popup_925178b4806f5335af4a32b810a27940.setContent(html_97118f0d34d7ac4ac5577816773b543d);
+            
+        
+
+        circle_marker_e7c8edfabd1caed5bdb0f130d2f6007e.bindPopup(popup_925178b4806f5335af4a32b810a27940)
+        ;
+
+        
+    
+    
+            circle_marker_e7c8edfabd1caed5bdb0f130d2f6007e.bindTooltip(
+                `<div>
+                     fire - low severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6fe56398e75a41784b00b912aba4303c = L.circleMarker(
+                [32.1659, -82.9001],
+                {"bubblingMouseEvents": true, "color": "cyan", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "cyan", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_b367d5d065d86c34a10ea656944dec97 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_42c957c5bbd21bad3e48bfe37744b4d7 = $(`<div id="html_42c957c5bbd21bad3e48bfe37744b4d7" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> hurricane<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Georgia<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_b367d5d065d86c34a10ea656944dec97.setContent(html_42c957c5bbd21bad3e48bfe37744b4d7);
+            
+        
+
+        circle_marker_6fe56398e75a41784b00b912aba4303c.bindPopup(popup_b367d5d065d86c34a10ea656944dec97)
+        ;
+
+        
+    
+    
+            circle_marker_6fe56398e75a41784b00b912aba4303c.bindTooltip(
+                `<div>
+                     hurricane - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_836b57395b2e2e81d5294c2e6f842403 = L.circleMarker(
+                [27.7567667, -81.4639835],
+                {"bubblingMouseEvents": true, "color": "cyan", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "cyan", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_c79d275c29b58ff01d4cd0b1e3970673 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_128830a8f710f0fbb3052c653596af17 = $(`<div id="html_128830a8f710f0fbb3052c653596af17" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> hurricane<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Florida<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_c79d275c29b58ff01d4cd0b1e3970673.setContent(html_128830a8f710f0fbb3052c653596af17);
+            
+        
+
+        circle_marker_836b57395b2e2e81d5294c2e6f842403.bindPopup(popup_c79d275c29b58ff01d4cd0b1e3970673)
+        ;
+
+        
+    
+    
+            circle_marker_836b57395b2e2e81d5294c2e6f842403.bindTooltip(
+                `<div>
+                     hurricane - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4d211a0ac117935a27f9d02db5f526cb = L.circleMarker(
+                [44.5624, -70.4508],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_5777f2304e7aeb34dd667b9a6d026028 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2dbfb769ad155e6da03a6f340b23ae94 = $(`<div id="html_2dbfb769ad155e6da03a6f340b23ae94" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Lewiston<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_5777f2304e7aeb34dd667b9a6d026028.setContent(html_2dbfb769ad155e6da03a6f340b23ae94);
+            
+        
+
+        circle_marker_4d211a0ac117935a27f9d02db5f526cb.bindPopup(popup_5777f2304e7aeb34dd667b9a6d026028)
+        ;
+
+        
+    
+    
+            circle_marker_4d211a0ac117935a27f9d02db5f526cb.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_21989b25d2d402e544f2d62b1ab4fff1 = L.circleMarker(
+                [48.1371, 11.5754],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_6b74bd5c4ce7e52659af1b50cd19ae54 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_520875fd059a21b52b6b722859023568 = $(`<div id="html_520875fd059a21b52b6b722859023568" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Munich<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_6b74bd5c4ce7e52659af1b50cd19ae54.setContent(html_520875fd059a21b52b6b722859023568);
+            
+        
+
+        circle_marker_21989b25d2d402e544f2d62b1ab4fff1.bindPopup(popup_6b74bd5c4ce7e52659af1b50cd19ae54)
+        ;
+
+        
+    
+    
+            circle_marker_21989b25d2d402e544f2d62b1ab4fff1.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_021fe0e9e7ea78ae625a461744d6800f = L.circleMarker(
+                [10.37532, -85.1223097],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_4cdae8af97bdacbe411fba0b8558ecc5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1e1651336722f0f6dfc33e72cea7dc73 = $(`<div id="html_1e1651336722f0f6dfc33e72cea7dc73" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> auto_accident<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> hotel<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_4cdae8af97bdacbe411fba0b8558ecc5.setContent(html_1e1651336722f0f6dfc33e72cea7dc73);
+            
+        
+
+        circle_marker_021fe0e9e7ea78ae625a461744d6800f.bindPopup(popup_4cdae8af97bdacbe411fba0b8558ecc5)
+        ;
+
+        
+    
+    
+            circle_marker_021fe0e9e7ea78ae625a461744d6800f.bindTooltip(
+                `<div>
+                     auto_accident - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5a4452766a1a01755b46f8b5a4caf2b1 = L.circleMarker(
+                [36.1699, -115.1398],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_b0d1a1fee8dee34b04d7e52dc0e75b58 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_efb16fef24ec3164d00950914e1d2758 = $(`<div id="html_efb16fef24ec3164d00950914e1d2758" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Las Vegas<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_b0d1a1fee8dee34b04d7e52dc0e75b58.setContent(html_efb16fef24ec3164d00950914e1d2758);
+            
+        
+
+        circle_marker_5a4452766a1a01755b46f8b5a4caf2b1.bindPopup(popup_b0d1a1fee8dee34b04d7e52dc0e75b58)
+        ;
+
+        
+    
+    
+            circle_marker_5a4452766a1a01755b46f8b5a4caf2b1.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3bad98a81e0ffcfc98eabd3281da8b27 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_051493c9867e1d177bb0a8c23cb72d64 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_87b56c44144e6cab7e16c2c80042f7bb = $(`<div id="html_87b56c44144e6cab7e16c2c80042f7bb" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_051493c9867e1d177bb0a8c23cb72d64.setContent(html_87b56c44144e6cab7e16c2c80042f7bb);
+            
+        
+
+        circle_marker_3bad98a81e0ffcfc98eabd3281da8b27.bindPopup(popup_051493c9867e1d177bb0a8c23cb72d64)
+        ;
+
+        
+    
+    
+            circle_marker_3bad98a81e0ffcfc98eabd3281da8b27.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_233a88b6c9954dc3a4a969dc32d10cc2 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_f3d972990719dc223adbfdfd8f042454 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1161d38fb468e8576d956ba2b1aa79eb = $(`<div id="html_1161d38fb468e8576d956ba2b1aa79eb" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_f3d972990719dc223adbfdfd8f042454.setContent(html_1161d38fb468e8576d956ba2b1aa79eb);
+            
+        
+
+        circle_marker_233a88b6c9954dc3a4a969dc32d10cc2.bindPopup(popup_f3d972990719dc223adbfdfd8f042454)
+        ;
+
+        
+    
+    
+            circle_marker_233a88b6c9954dc3a4a969dc32d10cc2.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4e086966fa000a06c262a92a82d2b31b = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_4d607492732d44f8c5bde32cd2e7c115 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5562d7eb3632cdf3c6f7cdbe64a398e2 = $(`<div id="html_5562d7eb3632cdf3c6f7cdbe64a398e2" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> LA<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_4d607492732d44f8c5bde32cd2e7c115.setContent(html_5562d7eb3632cdf3c6f7cdbe64a398e2);
+            
+        
+
+        circle_marker_4e086966fa000a06c262a92a82d2b31b.bindPopup(popup_4d607492732d44f8c5bde32cd2e7c115)
+        ;
+
+        
+    
+    
+            circle_marker_4e086966fa000a06c262a92a82d2b31b.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9c47e83c88ba677594f0cd0e9e2d5714 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_8ea9c8f9d775ae714bf58fccd7826272 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_63f732a14c382ad28475aa9642f095da = $(`<div id="html_63f732a14c382ad28475aa9642f095da" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_8ea9c8f9d775ae714bf58fccd7826272.setContent(html_63f732a14c382ad28475aa9642f095da);
+            
+        
+
+        circle_marker_9c47e83c88ba677594f0cd0e9e2d5714.bindPopup(popup_8ea9c8f9d775ae714bf58fccd7826272)
+        ;
+
+        
+    
+    
+            circle_marker_9c47e83c88ba677594f0cd0e9e2d5714.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8d2c62238410fbace70be1ecd1c5fa68 = L.circleMarker(
+                [36.7783, -121.4936],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_23524214d8bb6b6da833b1d5e6437209 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3775fd209b1b79b50b78f47f9a5eb775 = $(`<div id="html_3775fd209b1b79b50b78f47f9a5eb775" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_23524214d8bb6b6da833b1d5e6437209.setContent(html_3775fd209b1b79b50b78f47f9a5eb775);
+            
+        
+
+        circle_marker_8d2c62238410fbace70be1ecd1c5fa68.bindPopup(popup_23524214d8bb6b6da833b1d5e6437209)
+        ;
+
+        
+    
+    
+            circle_marker_8d2c62238410fbace70be1ecd1c5fa68.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_66df120e85b2f9328e2e8c19a8ce2e16 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_ca7d4db5a0c0e4d16b424f64a050f218 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c451e8143562b8cc86dfa229109dde8c = $(`<div id="html_c451e8143562b8cc86dfa229109dde8c" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> California, Los Angeles region<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_ca7d4db5a0c0e4d16b424f64a050f218.setContent(html_c451e8143562b8cc86dfa229109dde8c);
+            
+        
+
+        circle_marker_66df120e85b2f9328e2e8c19a8ce2e16.bindPopup(popup_ca7d4db5a0c0e4d16b424f64a050f218)
+        ;
+
+        
+    
+    
+            circle_marker_66df120e85b2f9328e2e8c19a8ce2e16.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cf0cde8ccd78440dcc8bc4919fc0ea20 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_ec5cdcaf008be6d339e40e11038d3178 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c54d6a34b9b305d3008309ef96613f32 = $(`<div id="html_c54d6a34b9b305d3008309ef96613f32" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_ec5cdcaf008be6d339e40e11038d3178.setContent(html_c54d6a34b9b305d3008309ef96613f32);
+            
+        
+
+        circle_marker_cf0cde8ccd78440dcc8bc4919fc0ea20.bindPopup(popup_ec5cdcaf008be6d339e40e11038d3178)
+        ;
+
+        
+    
+    
+            circle_marker_cf0cde8ccd78440dcc8bc4919fc0ea20.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4b9d6a4d04efb10f63cc80a634edcebe = L.circleMarker(
+                [36.1627, -86.7711],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_f88f9ab36bd177991ac9d1184c9ba13d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e2be704a9729335b3a399792216cd2bb = $(`<div id="html_e2be704a9729335b3a399792216cd2bb" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> shooting<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Metro Nashville<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_f88f9ab36bd177991ac9d1184c9ba13d.setContent(html_e2be704a9729335b3a399792216cd2bb);
+            
+        
+
+        circle_marker_4b9d6a4d04efb10f63cc80a634edcebe.bindPopup(popup_f88f9ab36bd177991ac9d1184c9ba13d)
+        ;
+
+        
+    
+    
+            circle_marker_4b9d6a4d04efb10f63cc80a634edcebe.bindTooltip(
+                `<div>
+                     shooting - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_77f178e9ed79695471a5badc0aa236b5 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_b2877ece1926d5204c6d3ee92d242ce7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_10841aeae0915d30d1d3db02565d5e05 = $(`<div id="html_10841aeae0915d30d1d3db02565d5e05" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_b2877ece1926d5204c6d3ee92d242ce7.setContent(html_10841aeae0915d30d1d3db02565d5e05);
+            
+        
+
+        circle_marker_77f178e9ed79695471a5badc0aa236b5.bindPopup(popup_b2877ece1926d5204c6d3ee92d242ce7)
+        ;
+
+        
+    
+    
+            circle_marker_77f178e9ed79695471a5badc0aa236b5.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4814647ef833bfce0e61ae1345373094 = L.circleMarker(
+                [34.2136, -118.2851],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_1ee3ffb4c3ce0d8dd8f28223070e341e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_40faa92aafea9159d3229ba4b35a94ba = $(`<div id="html_40faa92aafea9159d3229ba4b35a94ba" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Altadena, Calif.<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_1ee3ffb4c3ce0d8dd8f28223070e341e.setContent(html_40faa92aafea9159d3229ba4b35a94ba);
+            
+        
+
+        circle_marker_4814647ef833bfce0e61ae1345373094.bindPopup(popup_1ee3ffb4c3ce0d8dd8f28223070e341e)
+        ;
+
+        
+    
+    
+            circle_marker_4814647ef833bfce0e61ae1345373094.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aa53d0a3ce6a37ae703993f4adb87d1d = L.circleMarker(
+                [39.1143, -77.5314],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_43aa71f827ef295292fee5a1527515ce = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_92384107e14c2a17b42547a709d76ab7 = $(`<div id="html_92384107e14c2a17b42547a709d76ab7" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Ronald Reagan Washington National Airport<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_43aa71f827ef295292fee5a1527515ce.setContent(html_92384107e14c2a17b42547a709d76ab7);
+            
+        
+
+        circle_marker_aa53d0a3ce6a37ae703993f4adb87d1d.bindPopup(popup_43aa71f827ef295292fee5a1527515ce)
+        ;
+
+        
+    
+    
+            circle_marker_aa53d0a3ce6a37ae703993f4adb87d1d.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5da9fc3ac1313a6c54733f71c2a0c04d = L.circleMarker(
+                [34.0333, -118.476],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_734df2c5d000b78dc26828fadbff91ac = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7a9a4479eae7f12fba55c0f97ecedef7 = $(`<div id="html_7a9a4479eae7f12fba55c0f97ecedef7" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Pacific Palisades<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_734df2c5d000b78dc26828fadbff91ac.setContent(html_7a9a4479eae7f12fba55c0f97ecedef7);
+            
+        
+
+        circle_marker_5da9fc3ac1313a6c54733f71c2a0c04d.bindPopup(popup_734df2c5d000b78dc26828fadbff91ac)
+        ;
+
+        
+    
+    
+            circle_marker_5da9fc3ac1313a6c54733f71c2a0c04d.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e4963a46e6c84c0df380cac97b0d33d5 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_4d48988517b9e888e7d0b376eb6acbc3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_57e76899611e7646dd145f2072923c4e = $(`<div id="html_57e76899611e7646dd145f2072923c4e" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.850                 </div>                 </div>`)[0];
+                popup_4d48988517b9e888e7d0b376eb6acbc3.setContent(html_57e76899611e7646dd145f2072923c4e);
+            
+        
+
+        circle_marker_e4963a46e6c84c0df380cac97b0d33d5.bindPopup(popup_4d48988517b9e888e7d0b376eb6acbc3)
+        ;
+
+        
+    
+    
+            circle_marker_e4963a46e6c84c0df380cac97b0d33d5.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_076d95c104b3411960960b9146f10615 = L.circleMarker(
+                [39.100105, -94.5781416],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkred", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_352f52ab6bb03308a87740a987479060 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_44eb967dac0c5e383305c54f129d53a7 = $(`<div id="html_44eb967dac0c5e383305c54f129d53a7" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> extreme_heat<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.750<br>                     <b>Location:</b> Kansas, Missouri<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.525                 </div>                 </div>`)[0];
+                popup_352f52ab6bb03308a87740a987479060.setContent(html_44eb967dac0c5e383305c54f129d53a7);
+            
+        
+
+        circle_marker_076d95c104b3411960960b9146f10615.bindPopup(popup_352f52ab6bb03308a87740a987479060)
+        ;
+
+        
+    
+    
+            circle_marker_076d95c104b3411960960b9146f10615.bindTooltip(
+                `<div>
+                     extreme_heat - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_eed1345370198d019730cab96ede33a9 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_edf4a0f9c26d1f714d0c6964bc614ae9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a37b59d41ec132ea76a4d4c56b862723 = $(`<div id="html_a37b59d41ec132ea76a4d4c56b862723" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_edf4a0f9c26d1f714d0c6964bc614ae9.setContent(html_a37b59d41ec132ea76a4d4c56b862723);
+            
+        
+
+        circle_marker_eed1345370198d019730cab96ede33a9.bindPopup(popup_edf4a0f9c26d1f714d0c6964bc614ae9)
+        ;
+
+        
+    
+    
+            circle_marker_eed1345370198d019730cab96ede33a9.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cdd46288d3581b4c49fcd8e5ecb9a0c8 = L.circleMarker(
+                [42.1965, -71.1097],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_a4ec46cbcaaafc761d998b48c3b3c234 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9a21deb095f5414bf9b7081b46cf3ac3 = $(`<div id="html_9a21deb095f5414bf9b7081b46cf3ac3" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Lakeville, MA<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_a4ec46cbcaaafc761d998b48c3b3c234.setContent(html_9a21deb095f5414bf9b7081b46cf3ac3);
+            
+        
+
+        circle_marker_cdd46288d3581b4c49fcd8e5ecb9a0c8.bindPopup(popup_a4ec46cbcaaafc761d998b48c3b3c234)
+        ;
+
+        
+    
+    
+            circle_marker_cdd46288d3581b4c49fcd8e5ecb9a0c8.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0741535bee9f1c33502e962837f693c4 = L.circleMarker(
+                [42.7307, -71.4833],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_d9328323ebc1030d03abdefd1dd9787e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0a48770ea6c3fe1dd7f6d9492e963bda = $(`<div id="html_0a48770ea6c3fe1dd7f6d9492e963bda" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Concord, MA<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.644                 </div>                 </div>`)[0];
+                popup_d9328323ebc1030d03abdefd1dd9787e.setContent(html_0a48770ea6c3fe1dd7f6d9492e963bda);
+            
+        
+
+        circle_marker_0741535bee9f1c33502e962837f693c4.bindPopup(popup_d9328323ebc1030d03abdefd1dd9787e)
+        ;
+
+        
+    
+    
+            circle_marker_0741535bee9f1c33502e962837f693c4.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9dba0dc81600a50d40293d1383ca7ad8 = L.circleMarker(
+                [42.4075, -70.9646],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_8b4c8787680f4179ea2bb3ee7f4ca046 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8e328711e5a334557fc2f7ed71d86cd2 = $(`<div id="html_8e328711e5a334557fc2f7ed71d86cd2" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Lynn, MA<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_8b4c8787680f4179ea2bb3ee7f4ca046.setContent(html_8e328711e5a334557fc2f7ed71d86cd2);
+            
+        
+
+        circle_marker_9dba0dc81600a50d40293d1383ca7ad8.bindPopup(popup_8b4c8787680f4179ea2bb3ee7f4ca046)
+        ;
+
+        
+    
+    
+            circle_marker_9dba0dc81600a50d40293d1383ca7ad8.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_84e7ed7e269510e7f16ec3e88c1f5545 = L.circleMarker(
+                [41.7962409, -71.5992372],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_15c016602b838c9e936cca57b413e690 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4bf9740839e2e5e634aa3939b45bf0d9 = $(`<div id="html_4bf9740839e2e5e634aa3939b45bf0d9" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> RI<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_15c016602b838c9e936cca57b413e690.setContent(html_4bf9740839e2e5e634aa3939b45bf0d9);
+            
+        
+
+        circle_marker_84e7ed7e269510e7f16ec3e88c1f5545.bindPopup(popup_15c016602b838c9e936cca57b413e690)
+        ;
+
+        
+    
+    
+            circle_marker_84e7ed7e269510e7f16ec3e88c1f5545.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2f154a98775c036430fd6566f6046ba6 = L.circleMarker(
+                [39.7990175, -89.6439575],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_c01b12a73c9a3a96933a5e937c49db01 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_289b6f2f95e1fae74be65849c898c09b = $(`<div id="html_289b6f2f95e1fae74be65849c898c09b" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Springfield<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.644                 </div>                 </div>`)[0];
+                popup_c01b12a73c9a3a96933a5e937c49db01.setContent(html_289b6f2f95e1fae74be65849c898c09b);
+            
+        
+
+        circle_marker_2f154a98775c036430fd6566f6046ba6.bindPopup(popup_c01b12a73c9a3a96933a5e937c49db01)
+        ;
+
+        
+    
+    
+            circle_marker_2f154a98775c036430fd6566f6046ba6.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_abf64c07c3b71ff03c8d6ec425befdf0 = L.circleMarker(
+                [27.7663, -97.6673],
+                {"bubblingMouseEvents": true, "color": "cyan", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "cyan", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_2e2fc7950a8509b06d1d400252fff5c1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_23ce42cb4aca7b530c6bef5b574341c8 = $(`<div id="html_23ce42cb4aca7b530c6bef5b574341c8" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> hurricane<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> South Texas<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_2e2fc7950a8509b06d1d400252fff5c1.setContent(html_23ce42cb4aca7b530c6bef5b574341c8);
+            
+        
+
+        circle_marker_abf64c07c3b71ff03c8d6ec425befdf0.bindPopup(popup_2e2fc7950a8509b06d1d400252fff5c1)
+        ;
+
+        
+    
+    
+            circle_marker_abf64c07c3b71ff03c8d6ec425befdf0.bindTooltip(
+                `<div>
+                     hurricane - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_492ce86cb36c6bb63d1d972b9b571aee = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_cf905703272a7605ce5f05e041d75462 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_422d23982f55454520d93a272b2c849f = $(`<div id="html_422d23982f55454520d93a272b2c849f" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_cf905703272a7605ce5f05e041d75462.setContent(html_422d23982f55454520d93a272b2c849f);
+            
+        
+
+        circle_marker_492ce86cb36c6bb63d1d972b9b571aee.bindPopup(popup_cf905703272a7605ce5f05e041d75462)
+        ;
+
+        
+    
+    
+            circle_marker_492ce86cb36c6bb63d1d972b9b571aee.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e9ea119fab75a272c210224015f3a79e = L.circleMarker(
+                [34.2713, -118.7972],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_d7bc52fef577529fc2295b744da763cc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_922c24baef03285dfb77378bab7a886a = $(`<div id="html_922c24baef03285dfb77378bab7a886a" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> Ventura County and Western Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_d7bc52fef577529fc2295b744da763cc.setContent(html_922c24baef03285dfb77378bab7a886a);
+            
+        
+
+        circle_marker_e9ea119fab75a272c210224015f3a79e.bindPopup(popup_d7bc52fef577529fc2295b744da763cc)
+        ;
+
+        
+    
+    
+            circle_marker_e9ea119fab75a272c210224015f3a79e.bindTooltip(
+                `<div>
+                     other_disaster - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6c216555b33dbc72109d209eb8a33fa3 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_eeb0379a2a70420be65c2befab276d19 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fd47e89d399e1031d7da48acf2357e00 = $(`<div id="html_fd47e89d399e1031d7da48acf2357e00" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Los Angeles County<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_eeb0379a2a70420be65c2befab276d19.setContent(html_fd47e89d399e1031d7da48acf2357e00);
+            
+        
+
+        circle_marker_6c216555b33dbc72109d209eb8a33fa3.bindPopup(popup_eeb0379a2a70420be65c2befab276d19)
+        ;
+
+        
+    
+    
+            circle_marker_6c216555b33dbc72109d209eb8a33fa3.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_add253e43fa372cc0124542bccd421dd = L.circleMarker(
+                [33.9510011, -118.2062682],
+                {"bubblingMouseEvents": true, "color": "pink", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "pink", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_6a6cf74b8cb0bfa357cc8bfebc037534 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9f7ae551f14da06561fcfb8f06bb46f8 = $(`<div id="html_9f7ae551f14da06561fcfb8f06bb46f8" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> other_disaster<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Southern California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_6a6cf74b8cb0bfa357cc8bfebc037534.setContent(html_9f7ae551f14da06561fcfb8f06bb46f8);
+            
+        
+
+        circle_marker_add253e43fa372cc0124542bccd421dd.bindPopup(popup_6a6cf74b8cb0bfa357cc8bfebc037534)
+        ;
+
+        
+    
+    
+            circle_marker_add253e43fa372cc0124542bccd421dd.bindTooltip(
+                `<div>
+                     other_disaster - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ed8d38c2ebc7f375e337a43474c47cac = L.circleMarker(
+                [36.7783, -119.4179],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_61f1482fbdd75db4397c7e60eeabf4ef = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c8a47428bafbc8b21a972139df766759 = $(`<div id="html_c8a47428bafbc8b21a972139df766759" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_61f1482fbdd75db4397c7e60eeabf4ef.setContent(html_c8a47428bafbc8b21a972139df766759);
+            
+        
+
+        circle_marker_ed8d38c2ebc7f375e337a43474c47cac.bindPopup(popup_61f1482fbdd75db4397c7e60eeabf4ef)
+        ;
+
+        
+    
+    
+            circle_marker_ed8d38c2ebc7f375e337a43474c47cac.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7a072c03364d4d851adfc1e321db5718 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_823608d595a90b6906c12d81a27ca007 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ae19d3bf4651446caa441595529de9f5 = $(`<div id="html_ae19d3bf4651446caa441595529de9f5" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Southern California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_823608d595a90b6906c12d81a27ca007.setContent(html_ae19d3bf4651446caa441595529de9f5);
+            
+        
+
+        circle_marker_7a072c03364d4d851adfc1e321db5718.bindPopup(popup_823608d595a90b6906c12d81a27ca007)
+        ;
+
+        
+    
+    
+            circle_marker_7a072c03364d4d851adfc1e321db5718.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8d846498693957d31b0098d316c70f01 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_4d3749fd87a6bcdf2fc05b4835b074c5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b801c409006c8cd68c05e3f4c1919794 = $(`<div id="html_b801c409006c8cd68c05e3f4c1919794" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_4d3749fd87a6bcdf2fc05b4835b074c5.setContent(html_b801c409006c8cd68c05e3f4c1919794);
+            
+        
+
+        circle_marker_8d846498693957d31b0098d316c70f01.bindPopup(popup_4d3749fd87a6bcdf2fc05b4835b074c5)
+        ;
+
+        
+    
+    
+            circle_marker_8d846498693957d31b0098d316c70f01.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_14b9fb3ee538afc48b0a09462baf8485 = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_f57199cd93b316a247f1fb4052b9f63f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_12f5574b98e97d344395c7a742ef45e1 = $(`<div id="html_12f5574b98e97d344395c7a742ef45e1" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_f57199cd93b316a247f1fb4052b9f63f.setContent(html_12f5574b98e97d344395c7a742ef45e1);
+            
+        
+
+        circle_marker_14b9fb3ee538afc48b0a09462baf8485.bindPopup(popup_f57199cd93b316a247f1fb4052b9f63f)
+        ;
+
+        
+    
+    
+            circle_marker_14b9fb3ee538afc48b0a09462baf8485.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_56e219e35b6ea982bbd0837a8d533e3a = L.circleMarker(
+                [34.1521, -118.134],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_d92adc0d882160e9f10627d72a620698 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7d1a71a0faa6b702367faf34f4a57010 = $(`<div id="html_7d1a71a0faa6b702367faf34f4a57010" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> North Pasadena and Altadena (LA County)<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_d92adc0d882160e9f10627d72a620698.setContent(html_7d1a71a0faa6b702367faf34f4a57010);
+            
+        
+
+        circle_marker_56e219e35b6ea982bbd0837a8d533e3a.bindPopup(popup_d92adc0d882160e9f10627d72a620698)
+        ;
+
+        
+    
+    
+            circle_marker_56e219e35b6ea982bbd0837a8d533e3a.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_851f8838018ebe6b37466e21c1256a74 = L.circleMarker(
+                [34.0362, -118.4764],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_54e906e3a96d0c130ee3d77c8dd15436 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_163d5f3b36e03c2540fc4a41782ebbaa = $(`<div id="html_163d5f3b36e03c2540fc4a41782ebbaa" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Pacific Palisades (LA County)<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_54e906e3a96d0c130ee3d77c8dd15436.setContent(html_163d5f3b36e03c2540fc4a41782ebbaa);
+            
+        
+
+        circle_marker_851f8838018ebe6b37466e21c1256a74.bindPopup(popup_54e906e3a96d0c130ee3d77c8dd15436)
+        ;
+
+        
+    
+    
+            circle_marker_851f8838018ebe6b37466e21c1256a74.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1b240a3beba6675041677b6f3cceba33 = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_d78a72a597895da3ac8bd32ae509e51b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d0b6a8b2a9f2c0930f52f5a01409455a = $(`<div id="html_d0b6a8b2a9f2c0930f52f5a01409455a" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_d78a72a597895da3ac8bd32ae509e51b.setContent(html_d0b6a8b2a9f2c0930f52f5a01409455a);
+            
+        
+
+        circle_marker_1b240a3beba6675041677b6f3cceba33.bindPopup(popup_d78a72a597895da3ac8bd32ae509e51b)
+        ;
+
+        
+    
+    
+            circle_marker_1b240a3beba6675041677b6f3cceba33.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_705c717998a4331df1ecb7332428a74d = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_203a05e92f8e48a5f539f380a81aaa05 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b70bbe35a4adcd7ac31548277f42e176 = $(`<div id="html_b70bbe35a4adcd7ac31548277f42e176" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> Los Angeles<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_203a05e92f8e48a5f539f380a81aaa05.setContent(html_b70bbe35a4adcd7ac31548277f42e176);
+            
+        
+
+        circle_marker_705c717998a4331df1ecb7332428a74d.bindPopup(popup_203a05e92f8e48a5f539f380a81aaa05)
+        ;
+
+        
+    
+    
+            circle_marker_705c717998a4331df1ecb7332428a74d.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8c0ff8a685ff91aca509bf7fc058a13b = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_e5705f27e16775c18989b3f807b4328d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_00f45c38fc76dd5927e2959c58fd7001 = $(`<div id="html_00f45c38fc76dd5927e2959c58fd7001" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_e5705f27e16775c18989b3f807b4328d.setContent(html_00f45c38fc76dd5927e2959c58fd7001);
+            
+        
+
+        circle_marker_8c0ff8a685ff91aca509bf7fc058a13b.bindPopup(popup_e5705f27e16775c18989b3f807b4328d)
+        ;
+
+        
+    
+    
+            circle_marker_8c0ff8a685ff91aca509bf7fc058a13b.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b788327b156140d446c8ac3fff211050 = L.circleMarker(
+                [36.7783, -119.4179],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_3eb78708b1d2b9f534bd7aa35a433dd3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7f55ec367bd21781a0709e0839281be0 = $(`<div id="html_7f55ec367bd21781a0709e0839281be0" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.920<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.920                 </div>                 </div>`)[0];
+                popup_3eb78708b1d2b9f534bd7aa35a433dd3.setContent(html_7f55ec367bd21781a0709e0839281be0);
+            
+        
+
+        circle_marker_b788327b156140d446c8ac3fff211050.bindPopup(popup_3eb78708b1d2b9f534bd7aa35a433dd3)
+        ;
+
+        
+    
+    
+            circle_marker_b788327b156140d446c8ac3fff211050.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ceb3f8096bedf27f021d0e1248ec119c = L.circleMarker(
+                [34.03, -118.49],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_e3b2fe5cf58ff0fad51706f4c834dd03 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1599f745aed80c8ee7bd80f0a911f016 = $(`<div id="html_1599f745aed80c8ee7bd80f0a911f016" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Pacific Palisades (LA County)<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_e3b2fe5cf58ff0fad51706f4c834dd03.setContent(html_1599f745aed80c8ee7bd80f0a911f016);
+            
+        
+
+        circle_marker_ceb3f8096bedf27f021d0e1248ec119c.bindPopup(popup_e3b2fe5cf58ff0fad51706f4c834dd03)
+        ;
+
+        
+    
+    
+            circle_marker_ceb3f8096bedf27f021d0e1248ec119c.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_820a801e2d42d4654997ff112a3c1479 = L.circleMarker(
+                [34.0522, -118.2437],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_775f6864b2ad87fef933fdac5dd94b7d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_44dbde9e3efcb7e2cf0d6c065f0cb08a = $(`<div id="html_44dbde9e3efcb7e2cf0d6c065f0cb08a" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> high<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> LA County<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.950                 </div>                 </div>`)[0];
+                popup_775f6864b2ad87fef933fdac5dd94b7d.setContent(html_44dbde9e3efcb7e2cf0d6c065f0cb08a);
+            
+        
+
+        circle_marker_820a801e2d42d4654997ff112a3c1479.bindPopup(popup_775f6864b2ad87fef933fdac5dd94b7d)
+        ;
+
+        
+    
+    
+            circle_marker_820a801e2d42d4654997ff112a3c1479.bindTooltip(
+                `<div>
+                     fire - high severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4ebf993414646ce9495410e8e453e6cd = L.circleMarker(
+                [32.8542, -117.2086],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_40a73e666574aa31fea5e11d28b135ac = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_45d6eb153d91481570432ff3f2c862ad = $(`<div id="html_45d6eb153d91481570432ff3f2c862ad" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> low<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> South of La Jolla (San Diego County)<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.380                 </div>                 </div>`)[0];
+                popup_40a73e666574aa31fea5e11d28b135ac.setContent(html_45d6eb153d91481570432ff3f2c862ad);
+            
+        
+
+        circle_marker_4ebf993414646ce9495410e8e453e6cd.bindPopup(popup_40a73e666574aa31fea5e11d28b135ac)
+        ;
+
+        
+    
+    
+            circle_marker_4ebf993414646ce9495410e8e453e6cd.bindTooltip(
+                `<div>
+                     fire - low severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a68364583222d4d9ae56ce395ce7ec22 = L.circleMarker(
+                [34.2176371, -119.0383541],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_9082f71c7647f3a90e6713e95d273971 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f56d6cb49a47f0cb8370957c64b07563 = $(`<div id="html_f56d6cb49a47f0cb8370957c64b07563" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.950<br>                     <b>Location:</b> Camarillo (Ventura County)<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.665                 </div>                 </div>`)[0];
+                popup_9082f71c7647f3a90e6713e95d273971.setContent(html_f56d6cb49a47f0cb8370957c64b07563);
+            
+        
+
+        circle_marker_a68364583222d4d9ae56ce395ce7ec22.bindPopup(popup_9082f71c7647f3a90e6713e95d273971)
+        ;
+
+        
+    
+    
+            circle_marker_a68364583222d4d9ae56ce395ce7ec22.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6245a514777fedb15017a132845c144a = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_757585fd7676414edff96b0705a81941 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2eae155c16434dfcd4579f5b92e533ba = $(`<div id="html_2eae155c16434dfcd4579f5b92e533ba" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_757585fd7676414edff96b0705a81941.setContent(html_2eae155c16434dfcd4579f5b92e533ba);
+            
+        
+
+        circle_marker_6245a514777fedb15017a132845c144a.bindPopup(popup_757585fd7676414edff96b0705a81941)
+        ;
+
+        
+    
+    
+            circle_marker_6245a514777fedb15017a132845c144a.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_46ae8b1a885a5d47cecd2031d70b2a98 = L.circleMarker(
+                [34.2176371, -119.0383541],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_9a9b0627e474ccd4e70d1b47567a97e1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_438f8511394bb9e7e049ebf4b570c583 = $(`<div id="html_438f8511394bb9e7e049ebf4b570c583" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.900<br>                     <b>Location:</b> Camarillo (Ventura County)<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.630                 </div>                 </div>`)[0];
+                popup_9a9b0627e474ccd4e70d1b47567a97e1.setContent(html_438f8511394bb9e7e049ebf4b570c583);
+            
+        
+
+        circle_marker_46ae8b1a885a5d47cecd2031d70b2a98.bindPopup(popup_9a9b0627e474ccd4e70d1b47567a97e1)
+        ;
+
+        
+    
+    
+            circle_marker_46ae8b1a885a5d47cecd2031d70b2a98.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cee4c1b172049b4b69953fc882d5370e = L.circleMarker(
+                [39.2490157, -121.030051],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_424a24bdfaad647509f2e4355fe6a0e8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_33fa92caff4fc07565a23033a4dd0346 = $(`<div id="html_33fa92caff4fc07565a23033a4dd0346" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> low<br>                     <b>Confidence:</b> 0.650<br>                     <b>Location:</b> Nevada-Yuba-Placer Unit<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.260                 </div>                 </div>`)[0];
+                popup_424a24bdfaad647509f2e4355fe6a0e8.setContent(html_33fa92caff4fc07565a23033a4dd0346);
+            
+        
+
+        circle_marker_cee4c1b172049b4b69953fc882d5370e.bindPopup(popup_424a24bdfaad647509f2e4355fe6a0e8)
+        ;
+
+        
+    
+    
+            circle_marker_cee4c1b172049b4b69953fc882d5370e.bindTooltip(
+                `<div>
+                     fire - low severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_183a692dd0c3b35c7165a2f9af99cc3c = L.circleMarker(
+                [36.1699, -119.7428],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_fd373b07d0cad24f56a87572d748d24b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_50747f61000b4d681a2efbd3186b0136 = $(`<div id="html_50747f61000b4d681a2efbd3186b0136" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_fd373b07d0cad24f56a87572d748d24b.setContent(html_50747f61000b4d681a2efbd3186b0136);
+            
+        
+
+        circle_marker_183a692dd0c3b35c7165a2f9af99cc3c.bindPopup(popup_fd373b07d0cad24f56a87572d748d24b)
+        ;
+
+        
+    
+    
+            circle_marker_183a692dd0c3b35c7165a2f9af99cc3c.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e1e490fcaa50f749bd1580ca9d329007 = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_0c847fdeca5afa8ffd290fb837c28820 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_db6a6c964c3734f8c99b7bfe8bf9d71e = $(`<div id="html_db6a6c964c3734f8c99b7bfe8bf9d71e" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> fire<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.750<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.525                 </div>                 </div>`)[0];
+                popup_0c847fdeca5afa8ffd290fb837c28820.setContent(html_db6a6c964c3734f8c99b7bfe8bf9d71e);
+            
+        
+
+        circle_marker_e1e490fcaa50f749bd1580ca9d329007.bindPopup(popup_0c847fdeca5afa8ffd290fb837c28820)
+        ;
+
+        
+    
+    
+            circle_marker_e1e490fcaa50f749bd1580ca9d329007.bindTooltip(
+                `<div>
+                     fire - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dab4365bd3d3a1377c65a65906de7fc3 = L.circleMarker(
+                [36.7014631, -118.755997],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(feature_group_b103d20b1fdcffb73d97e8401fa2ecc1);
+        
+    
+        var popup_f7af4aa6fd6979b933979f9297661f4d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6ce7e00834250f33961b695a27056683 = $(`<div id="html_6ce7e00834250f33961b695a27056683" style="width: 100.0%; height: 100.0%;">                 <div style="width: 250px;">                     <h4>Disaster Event Details</h4>                     <b>Type:</b> flood<br>                     <b>Severity:</b> medium<br>                     <b>Confidence:</b> 0.850<br>                     <b>Location:</b> California<br>                     <b>Help Request:</b> False<br>                     <b>Intensity Score:</b> 0.595                 </div>                 </div>`)[0];
+                popup_f7af4aa6fd6979b933979f9297661f4d.setContent(html_6ce7e00834250f33961b695a27056683);
+            
+        
+
+        circle_marker_dab4365bd3d3a1377c65a65906de7fc3.bindPopup(popup_f7af4aa6fd6979b933979f9297661f4d)
+        ;
+
+        
+    
+    
+            circle_marker_dab4365bd3d3a1377c65a65906de7fc3.bindTooltip(
+                `<div>
+                     flood - medium severity
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_b103d20b1fdcffb73d97e8401fa2ecc1.addTo(map_2521937de9f2199f06662c87e18bc1da);
+        
+    
+            var layer_control_46fca947f5a7ecea286bc51131ce1a50_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_147465a16d4105adb9f7f1aaccded3a4,
+                },
+                overlays :  {
+                    "Disaster Intensity Heatmap" : heat_map_74c2dc27c538da6164fcceef1a5e5d30,
+                    "Individual Events" : feature_group_b103d20b1fdcffb73d97e8401fa2ecc1,
+                },
+            };
+            let layer_control_46fca947f5a7ecea286bc51131ce1a50 = L.control.layers(
+                layer_control_46fca947f5a7ecea286bc51131ce1a50_layers.base_layers,
+                layer_control_46fca947f5a7ecea286bc51131ce1a50_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_2521937de9f2199f06662c87e18bc1da);
+
+        
+</script>
+</html>
