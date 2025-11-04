@@ -1,0 +1,196 @@
+event_message,event_type,function_id,id,level,timestamp
+shutdown,Shutdown,31e02f18-485c-4f2c-953d-8d5fb7a88c82,1e4e8487-7864-48b8-afef-212d4c7ffd48,log,1762274416518000
+"[classification-worker] FINISHED – Success: 6, Errors: 0
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,a63a936d-8ef4-47bf-af5c-92d72c963d9d,info,1762274404161000
+"[classification-worker] PERFORMANCE - Total: 3695ms, Avg classification: 440ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,344db11f-5de1-4602-8b77-573dac8e819d,info,1762274404161000
+"[classification-worker] Posts/minute: 97.43
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,06dcd37b-4640-41ab-a8a6-f5d650abead2,info,1762274404161000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tzkohtxa2d
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,e8ee3e8e-25be-4080-b55b-4673ea610514,info,1762274404161000
+"[classification-worker] Classification result: not_relevant (222ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,1cb0a6af-86df-4c89-b44e-f97d8ad22a21,info,1762274404123000
+"[classifyOne] COMPLETED in: 222ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,a5de8a98-8fc0-48a5-88b4-4496b8b35db1,info,1762274404123000
+"[classifyOne] START - The Substance is a bloody, campy, fiercely feminist body horror film. Demi Moore…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,3eecd9b5-af0e-44b9-9b67-fdb1a13cb92e,info,1762274403902000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,4ae3c228-43db-4989-bc61-08838ee52098,info,1762274403902000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tyl67f522a
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,bb6d6d05-7157-4095-896d-e787acd4e13b,info,1762274403901000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tzkohtxa2d
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,e1ccc18b-3fb6-4f90-8bee-9c426f05de97,info,1762274403901000
+"[classification-worker] Classification result: not_relevant (188ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,e1043377-f33a-4e6a-866b-e2d2fea75705,info,1762274403873000
+"[classifyOne] COMPLETED in: 188ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,cc52a98d-9644-45d3-91b3-8765d0e471b1,info,1762274403873000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tyl67f522a
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,9c9ab9d4-9d8e-43d1-a4be-3605a9de696a,info,1762274403685000
+"[classifyOne] START - New data released by the FBI show violent crime and property crime both fell in …
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,8988ec99-d3a5-49d3-ad1e-00739895f6cc,info,1762274403685000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,fb1ebaf0-457d-4c6f-baad-a54fdfd16612,info,1762274403685000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4ttyt6z2w2s
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,1027f374-3fe3-469e-8cc7-90fca64d5dc1,info,1762274403684000
+"[classifyOne] COMPLETED in: 323ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,d0e851cd-99ac-4778-9b5c-e3bbc6792967,info,1762274403652000
+"[classification-worker] Classification result: not_relevant (324ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b63c0408-f2eb-4d9f-8708-f0ca68ff3b1f,info,1762274403652000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4ttyt6z2w2s
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,97c0d6da-77ab-415e-b17f-d46b590ac47d,info,1762274403328000
+"[classifyOne] START - Morning Edition spoke to a couple of barbers about the trendy haircut with shave…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,e1c79f15-d34b-44fb-9492-6102eede308a,info,1762274403328000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tri676cj2c
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,ec64677c-eafd-4141-80ed-98c3fc7d41b8,info,1762274403328000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,00f07206-d332-45e7-806e-d8076d5ec57b,info,1762274403328000
+"[classifyOne] COMPLETED in: 315ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,f92d4c24-86c5-4b7c-a3a4-c76cb863246e,info,1762274403238000
+"[classification-worker] Classification result: not_relevant (315ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,43a83949-e3e4-4903-a535-f25be7db135a,info,1762274403238000
+"[classifyOne] START - California’s lawsuit alleges that ExxonMobil has known for decades that recyclin…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,332cd168-c474-462f-9f39-2d5a796e021b,info,1762274402924000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tri676cj2c
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,f5a557d1-e42c-4e90-97f2-0517fdf198c4,info,1762274402924000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,ec7132dd-d275-4289-872b-74c50e4838c2,info,1762274402924000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4twtwjkpx2i
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,901e8081-57fa-4017-b0f0-fccc5b3fc318,info,1762274402923000
+"[classification-worker] Classification result: not_relevant (374ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,3c585dcc-5f4a-4f16-b701-ea9eedd72534,info,1762274402799000
+"[classifyOne] COMPLETED in: 374ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,15a4dd7f-fde1-4766-984e-fabcce49a4c5,info,1762274402799000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,35f9cff8-cc8f-416e-824c-18c6e0109826,info,1762274402425000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4twtwjkpx2i
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,3ebd6072-ea40-4deb-9f7b-35fe524560d6,info,1762274402425000
+"[classifyOne] START - Earlier this month, a Gettysburg College student used a box cutter to write a ra…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b04c8439-b417-4641-a717-073f46e5b89a,info,1762274402425000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tvtdxpy42j
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,153591ad-4d4d-4a3c-b566-601c4e526855,info,1762274402420000
+"[classification-worker] Classification result: not_relevant (1219ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,fce9aa7c-f006-420d-a932-738150c51d4c,info,1762274402150000
+"[classifyOne] COMPLETED in: 1216ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,a8ff71b9-8f72-4687-9a08-0b478e6b22e5,info,1762274402150000
+"[classifyOne] START - Richard Powers' latest novel brims with love for humanity and the planet. He mak…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,0744c0c8-df79-41bc-b077-7a9dffa79e3c,info,1762274400934000
+"[classification-worker] Processing 6 rows
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,ae7c16ac-5533-413e-911a-bf841f2cbde7,info,1762274400931000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b989418e-e3e5-401c-83a7-d29b638816fd,info,1762274400931000
+"[classification-worker] Queue fetch: 196ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,edb1832a-4dae-4a97-b585-c23b2a2f9cdf,info,1762274400931000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tvtdxpy42j
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,7a6ab875-caf5-4958-b262-1d2ef1a1d58d,info,1762274400931000
+"[classification-worker] Classified URIs fetch: 265ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,29e32aa1-e387-4f65-80d5-db72b55ddb3f,info,1762274400731000
+"[classification-worker] START - 2025-11-04T16:40:00.465Z
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b845470d-0c20-46c1-a718-de8f0c6859cd,info,1762274400466000
+booted (time: 93ms),Boot,31e02f18-485c-4f2c-953d-8d5fb7a88c82,4454525a-36c3-435d-ace6-39e147852c52,log,1762274400385000
+shutdown,Shutdown,31e02f18-485c-4f2c-953d-8d5fb7a88c82,ad6fd908-487d-4cb6-ba78-d34d7b2bf703,log,1762274000535000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tr3qjtsu2j
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,8af8c97c-910b-40a3-bb9a-76026fe5f6e9,info,1762273804965000
+"[classification-worker] PERFORMANCE - Total: 4372ms, Avg classification: 360ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,e6dfc751-8aac-4bef-9511-200bf9bc4be4,info,1762273804965000
+"[classification-worker] FINISHED – Success: 6, Errors: 0
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,7437744b-5c47-48ae-8131-726d56a2292e,info,1762273804965000
+"[classification-worker] Posts/minute: 82.34
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,5f940410-9b36-42dd-8451-41d3dd128017,info,1762273804965000
+"[classification-worker] Classification result: not_relevant (211ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,6904fba9-c5cc-4279-8432-44961de29993,info,1762273804939000
+"[classifyOne] COMPLETED in: 210ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,0bd962be-a708-47fd-aedd-6e7d31600f9b,info,1762273804939000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tpycumex2p
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,62f0db2c-95a7-4492-be7b-3f40002fd2d5,info,1762273804728000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tr3qjtsu2j
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,58a1ef78-1d76-43a5-8017-9bd84004238a,info,1762273804728000
+"[classifyOne] START - When asked whether he would run again in four years if his current presidential …
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,1111291c-2a7f-4dd6-99d2-5005d293ceee,info,1762273804728000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,418f3993-0902-4d28-b39a-a7b0492706cd,info,1762273804728000
+"[classification-worker] Classification result: not_relevant (541ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,24249a27-cc3f-4a39-89ec-6fc6f31c070a,info,1762273804657000
+"[classifyOne] COMPLETED in: 540ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,79ecfd76-cf8a-486b-9f71-9e777d7f126e,info,1762273804656000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tneqq7z42t
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,f1f289c6-097f-43e8-8e53-d43e8b8ee14d,info,1762273804116000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,1c74338c-a792-41c9-a8f0-771784fe9a81,info,1762273804116000
+"[classifyOne] START - Today, business correspondent Camila Domonoske takes us on a tour of one company…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b44feb76-08b5-43c9-b782-5201f4335c4f,info,1762273804116000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tpycumex2p
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,666d86a2-0d9a-41d3-805f-237e3bced105,info,1762273804116000
+"[classification-worker] Classification result: not_relevant (337ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,0e69e081-a5dd-41b0-b552-eef4f2236b7f,info,1762273804084000
+"[classifyOne] COMPLETED in: 327ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,ca2dab49-fa2c-4fd7-bcff-6ccf6246964f,info,1762273804074000
+"[classifyOne] START - Electric vehicles are caught up in the culture wars. Data from Ipsos shows the p…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b1ef0bdd-ae3c-4b73-984d-2d72f039488d,info,1762273803747000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,9f84fda5-dfab-4ce9-bee0-3060aa920cdd,info,1762273803747000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tneqq7z42t
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,513571d2-5996-4f04-97ec-0ceb8e8619e6,info,1762273803747000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tmtr3ybx2p
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,ccd02889-09d2-47ee-886a-b2e2af3ea24a,info,1762273803746000
+"[classification-worker] Classification result: not_relevant (190ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,8786497f-1e9f-41fb-b59d-a8a4e0666d57,info,1762273803712000
+"[classifyOne] COMPLETED in: 190ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,59208f14-70cc-45bc-9996-633b6efeaccd,info,1762273803712000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tmtr3ybx2p
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,6fc0b4da-8756-4780-9364-6183cf35578e,info,1762273803518000
+"[classifyOne] START - Apple, Google and Samsung are all working to integrate AI that can generate reci…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b82acce8-04fb-46ef-a05a-6724ed753cdb,info,1762273803518000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,6ca14647-7955-47dc-b530-fc8cbfd089d9,info,1762273803518000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tp5uhlfd2b
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,112235df-3d20-44ee-b6d2-a63249d485f4,info,1762273803518000
+"[classification-worker] Classification result: not_relevant (389ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,6f711d00-e092-4b50-a541-5c45bfad27f7,info,1762273803468000
+"[classifyOne] COMPLETED in: 388ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,e2ae083a-0ba1-429a-a9fd-b6e0963b53bc,info,1762273803467000
+"[classifyOne] START - Russia and Ukraine have fought for a decade. The Israel-Hamas war is part of a c…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,aa81d38a-7d1f-4504-8cab-f944dcf15903,info,1762273803079000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,56955a36-fd98-4a48-ba48-249baf33960f,info,1762273803079000
+"[classification-worker] SUCCESS - processed at://did:plc:ucjr5nhj4ezdxzqdy6gcfomk/app.bsky.feed.post/3m4sxa7wrcfl2 (classify: 489ms, insert: 988ms, delete: 487ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,fcf00c19-7434-4937-abbd-3dd6dba48dfc,info,1762273803078000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tp5uhlfd2b
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,3325bcfb-36ab-413a-b030-533b78a1532a,info,1762273803078000
+"[classification-worker] Row at://did:plc:ucjr5nhj4ezdxzqdy6gcfomk/app.bsky.feed.post/3m4sxa7wrcfl2 completed in: 1970ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,fb978de9-6487-4b19-b057-f7e089577f8b,info,1762273803078000
+"[classifyOne] COMPLETED in: 469ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,f7f1b508-d9d1-4aaa-b635-657ae199faa6,info,1762273801603000
+"[classification-worker] Classification result: hurricane (489ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,3a94f927-b670-4d42-bda2-3742c89aa26b,info,1762273801603000
+"[classifyOne] START - Jamaicans reeling from Hurricane Melissa The Category 5 storm caused destruction…
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,e4e88d98-2d65-49bf-b6e4-bf92d46e47bf,info,1762273801136000
+"[classification-worker] → at://did:plc:ucjr5nhj4ezdxzqdy6gcfomk/app.bsky.feed.post/3m4sxa7wrcfl2
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,2748e474-df29-4636-8f8b-4404ab18686e,info,1762273801114000
+"[classification-worker] Author from queue: usaid.activitypub.awakari.com.ap.brid.gy
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,9a4f5691-1974-4897-966a-7030e7972d1a,info,1762273801114000
+"[classification-worker] Processing 6 rows
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,16a60951-b959-4f09-98b4-fc489c889543,info,1762273801108000
+"[classification-worker] Queue fetch: 360ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,990b0767-74a4-4445-8f67-b91c3ba9d6ae,info,1762273801108000
+"[classification-worker] Classified URIs fetch: 143ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,42781051-339a-4e13-8f36-9aee1311b106,info,1762273800745000
+"[classification-worker] START - 2025-11-04T16:30:00.593Z
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,8572dfd4-baa3-436a-871b-0387ac9f2765,info,1762273800602000
+booted (time: 280ms),Boot,31e02f18-485c-4f2c-953d-8d5fb7a88c82,7a70dcb0-e99b-4115-b095-dbb718d94671,log,1762273800504000
+shutdown,Shutdown,31e02f18-485c-4f2c-953d-8d5fb7a88c82,dfa188cf-7990-47df-b08e-1f62fa81b193,log,1762273401888000
+"[classification-worker] FINISHED – Success: 6, Errors: 0
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,b23f088a-d15c-4940-8638-e99e4b922726,info,1762273204418000
+"[classification-worker] PERFORMANCE - Total: 2335ms, Avg classification: 278ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,d391e997-9efa-41de-b751-6a26d93661df,info,1762273204418000
+"[classification-worker] deleted (not_relevant) at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tiz7ni7w2j
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,9ff2ae51-2a30-41e9-827c-6ea9cd2f70ae,info,1762273204418000
+"[classification-worker] Posts/minute: 154.18
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,07fb745b-e4c0-4227-9afc-ac2b578a28fd,info,1762273204418000
+"[classification-worker] Classification result: not_relevant (189ms)
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,6e5b19c5-a7ca-4723-a748-bd7f6cb0c135,info,1762273204392000
+"[classifyOne] COMPLETED in: 189ms
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,7a41241e-b775-47f8-855a-80f8af1cf7f2,info,1762273204392000
+"[classification-worker] → at://did:plc:ln72v57ivz2g46uqf4xxqiuh/app.bsky.feed.post/3l4tiz7ni7w2j
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,1dde0786-053b-41be-9cbc-4657240dec67,info,1762273204202000
+"[classification-worker] Author from queue: null
+",Log,31e02f18-485c-4f2c-953d-8d5fb7a88c82,99e31833-a468-4538-9426-ca31bacfde04,info,1762273204202000

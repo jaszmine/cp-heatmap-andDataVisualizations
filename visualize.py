@@ -15,14 +15,37 @@ sns.set_palette("husl")
 class DisasterDataVisualizer:
     def __init__(self, csv_file_path):
         """Initialize with CSV file path"""
-        self.df = pd.read_csv("114records-be_extracted_info_output_rows.csv")
+        # self.df = pd.read_csv("114records-be_extracted_info_output_rows.csv")
+        self.df = pd.read_csv("2006records-be_extracted_info_output_rows.csv")
         self.preprocess_data()
         
+    # def preprocess_data(self):
+    #     """Clean and preprocess the data"""
+    #     # Convert timestamp columns
+    #     self.df['processed_at'] = pd.to_datetime(self.df['processed_at'])
+    #     self.df['indexed_at'] = pd.to_datetime(self.df['indexed_at'])
+        
+    #     # Extract time components
+    #     self.df['hour'] = self.df['processed_at'].dt.hour
+    #     self.df['date'] = self.df['processed_at'].dt.date
+    #     self.df['day_of_week'] = self.df['processed_at'].dt.day_name()
+        
+    #     # Clean location data
+    #     self.df['location_mentioned'] = self.df['location_mentioned'].replace('null', None)
+        
+    #     print(f"Loaded {len(self.df)} disaster posts")
+    #     print(f"Date range: {self.df['processed_at'].min()} to {self.df['processed_at'].max()}")
+    """ fixed - timestamp parsing now accounts for timezone offset (+00)  """
     def preprocess_data(self):
         """Clean and preprocess the data"""
-        # Convert timestamp columns
-        self.df['processed_at'] = pd.to_datetime(self.df['processed_at'])
-        self.df['indexed_at'] = pd.to_datetime(self.df['indexed_at'])
+        # Convert timestamp columns - handle timezone format
+        try:
+            self.df['processed_at'] = pd.to_datetime(self.df['processed_at'], format='ISO8601')
+            self.df['indexed_at'] = pd.to_datetime(self.df['indexed_at'], format='ISO8601')
+        except:
+            # Fallback to mixed format parsing
+            self.df['processed_at'] = pd.to_datetime(self.df['processed_at'], format='mixed')
+            self.df['indexed_at'] = pd.to_datetime(self.df['indexed_at'], format='mixed')
         
         # Extract time components
         self.df['hour'] = self.df['processed_at'].dt.hour
@@ -35,33 +58,76 @@ class DisasterDataVisualizer:
         print(f"Loaded {len(self.df)} disaster posts")
         print(f"Date range: {self.df['processed_at'].min()} to {self.df['processed_at'].max()}")
     
+    # def disaster_type_distribution(self):
+    #     """Disaster type distribution pie chart and bar chart"""
+    #     disaster_counts = self.df['disaster_type'].value_counts()
+        
+    #     # Create subplots
+    #     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+        
+    #     # Pie chart
+    #     ax1.pie(disaster_counts.values, labels=disaster_counts.index, autopct='%1.1f%%', startangle=90)
+    #     ax1.set_title('Disaster Type Distribution', fontsize=14, fontweight='bold')
+        
+    #     # Bar chart
+    #     bars = ax2.bar(disaster_counts.index, disaster_counts.values, color='skyblue')
+    #     ax2.set_title('Disaster Type Counts', fontsize=14, fontweight='bold')
+    #     ax2.set_xlabel('Disaster Type')
+    #     ax2.set_ylabel('Number of Posts')
+    #     ax2.tick_params(axis='x', rotation=45)
+        
+    #     # Add value labels on bars
+    #     for bar in bars:
+    #         height = bar.get_height()
+    #         ax2.text(bar.get_x() + bar.get_width()/2., height,
+    #                 f'{int(height)}', ha='center', va='bottom')
+        
+    #     plt.tight_layout()
+    #     plt.savefig('disaster_type_distribution.png', dpi=300, bbox_inches='tight')
+    #     plt.show()
+        
+    #     return disaster_counts
+    """ fixed - using legend for pize chart (so that text doesn't overlap for smaller sections) """
+    """ also added interactice localHost feature """
     def disaster_type_distribution(self):
-        """Disaster type distribution pie chart and bar chart"""
+        """Interactive disaster type distribution using Plotly"""
         disaster_counts = self.df['disaster_type'].value_counts()
         
-        # Create subplots
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+        # Create interactive pie chart
+        fig = make_subplots(rows=1, cols=2, 
+                        specs=[[{"type": "pie"}, {"type": "bar"}]],
+                        subplot_titles=('Disaster Type Distribution', 'Disaster Type Counts'))
         
         # Pie chart
-        ax1.pie(disaster_counts.values, labels=disaster_counts.index, autopct='%1.1f%%', startangle=90)
-        ax1.set_title('Disaster Type Distribution', fontsize=14, fontweight='bold')
+        fig.add_trace(
+            go.Pie(labels=disaster_counts.index, 
+                values=disaster_counts.values,
+                textinfo='percent+label',
+                hole=0.3,
+                marker=dict(colors=px.colors.qualitative.Set3)),
+            row=1, col=1
+        )
         
         # Bar chart
-        bars = ax2.bar(disaster_counts.index, disaster_counts.values, color='skyblue')
-        ax2.set_title('Disaster Type Counts', fontsize=14, fontweight='bold')
-        ax2.set_xlabel('Disaster Type')
-        ax2.set_ylabel('Number of Posts')
-        ax2.tick_params(axis='x', rotation=45)
+        fig.add_trace(
+            go.Bar(x=disaster_counts.index, 
+                y=disaster_counts.values,
+                marker_color='lightblue',
+                text=disaster_counts.values,
+                textposition='auto'),
+            row=1, col=2
+        )
         
-        # Add value labels on bars
-        for bar in bars:
-            height = bar.get_height()
-            ax2.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{int(height)}', ha='center', va='bottom')
+        fig.update_layout(
+            title_text="Disaster Type Analysis",
+            height=500,
+            showlegend=False
+        )
         
-        plt.tight_layout()
-        plt.savefig('disaster_type_distribution.png', dpi=300, bbox_inches='tight')
-        plt.show()
+        fig.update_xaxes(tickangle=45, row=1, col=2)
+        
+        fig.write_html('disaster_type_interactive.html')
+        fig.show()
         
         return disaster_counts
     
@@ -292,28 +358,65 @@ class DisasterDataVisualizer:
         
         return location_counts
     
-    def author_analysis(self):
-        """Analyze authors with multiple posts"""
-        author_counts = self.df['author'].value_counts()
-        multiple_authors = author_counts[author_counts > 1]
+    # def author_analysis(self):
+    #     """Analyze authors with multiple posts"""
+    #     author_counts = self.df['author'].value_counts()
+    #     multiple_authors = author_counts[author_counts > 1]
         
-        if len(multiple_authors) > 0:
-            fig, ax = plt.subplots(figsize=(12, 6))
-            bars = ax.bar(multiple_authors.index, multiple_authors.values, color='orange')
-            ax.set_title('Authors with Multiple Disaster Reports', fontweight='bold')
-            ax.set_ylabel('Number of Posts')
-            ax.tick_params(axis='x', rotation=45)
+    #     if len(multiple_authors) > 0:
+    #         fig, ax = plt.subplots(figsize=(12, 6))
+    #         bars = ax.bar(multiple_authors.index, multiple_authors.values, color='orange')
+    #         ax.set_title('Authors with Multiple Disaster Reports', fontweight='bold')
+    #         ax.set_ylabel('Number of Posts')
+    #         ax.tick_params(axis='x', rotation=45)
             
+    #         for bar in bars:
+    #             height = bar.get_height()
+    #             ax.text(bar.get_x() + bar.get_width()/2., height,
+    #                    f'{int(height)}', ha='center', va='bottom')
+            
+    #         plt.tight_layout()
+    #         plt.savefig('author_analysis.png', dpi=300, bbox_inches='tight')
+    #         plt.show()
+        
+    #     return multiple_authors
+    def author_analysis(self):
+        """Analyze authors with 10 or more classified posts"""
+        author_counts = self.df['author'].value_counts()
+        
+        # Filter for authors with 10+ posts
+        frequent_authors = author_counts[author_counts >= 10]
+        
+        if len(frequent_authors) > 0:
+            print(f"Found {len(frequent_authors)} authors with 10+ posts")
+            
+            # Use horizontal layout for better readability
+            fig, ax = plt.subplots(figsize=(12, 8))
+            bars = ax.barh(frequent_authors.index, frequent_authors.values, color='orange')
+            ax.set_title('Authors with 10+ Disaster Posts', fontweight='bold', fontsize=14)
+            ax.set_xlabel('Number of Posts', fontweight='bold')
+            ax.set_ylabel('Author', fontweight='bold')
+            
+            # Add value labels on bars
             for bar in bars:
-                height = bar.get_height()
-                ax.text(bar.get_x() + bar.get_width()/2., height,
-                       f'{int(height)}', ha='center', va='bottom')
+                width = bar.get_width()
+                ax.text(width, bar.get_y() + bar.get_height()/2., 
+                    f'{int(width)}', ha='left', va='center', 
+                    fontweight='bold', fontsize=10)
             
             plt.tight_layout()
             plt.savefig('author_analysis.png', dpi=300, bbox_inches='tight')
             plt.show()
+            
+        else:
+            print("No authors found with 10 or more posts")
+            # Optional: Show authors with 5+ posts instead
+            alternative_authors = author_counts[author_counts >= 5]
+            if len(alternative_authors) > 0:
+                print(f"Showing authors with 5+ posts instead: {len(alternative_authors)} authors")
+                # You could create a chart for these as well
         
-        return multiple_authors
+        return frequent_authors
     
     def generate_dashboard_metrics(self):
         """Generate key metrics for dashboard"""
