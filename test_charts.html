@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Data Charts Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .metric-card {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #3b82f6;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        .metric-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .chart-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #1f2937;
+        }
+        canvas {
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Disaster Data Visualization Test</h1>
+        
+        <div id="metrics" class="metrics-grid">
+            <!-- Metrics will be populated by JavaScript -->
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div class="chart-title">Disaster Type Distribution</div>
+                <canvas id="disasterTypePie"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Disaster Type Counts</div>
+                <canvas id="disasterTypeBar"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Posts by Severity Level</div>
+                <canvas id="severityPosts"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Average Confidence by Severity</div>
+                <canvas id="severityConfidence"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Daily Posts Trend</div>
+                <canvas id="temporalDaily"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Hourly Distribution</div>
+                <canvas id="temporalHourly"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Help Requests by Disaster Type</div>
+                <canvas id="helpRequests"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Model Confidence by Disaster Type</div>
+                <canvas id="confidenceAnalysis"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Top Locations</div>
+                <canvas id="locationAnalysis"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Active Authors</div>
+                <canvas id="authorAnalysis"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load and display the chart data
+        fetch('chart_data.json')
+            .then(response => response.json())
+            .then(chartData => {
+                // Display metrics
+                displayMetrics(chartData.metrics);
+                
+                // Create charts
+                createChart('disasterTypePie', chartData.disaster_type_pie);
+                createChart('disasterTypeBar', chartData.disaster_type_bar);
+                createChart('severityPosts', chartData.severity_posts);
+                createChart('severityConfidence', chartData.severity_confidence);
+                createChart('temporalDaily', chartData.temporal_daily);
+                createChart('temporalHourly', chartData.temporal_hourly);
+                createChart('helpRequests', chartData.help_requests);
+                createChart('confidenceAnalysis', chartData.confidence_analysis);
+                createChart('locationAnalysis', chartData.location_analysis);
+                
+                if (chartData.author_analysis) {
+                    createChart('authorAnalysis', chartData.author_analysis);
+                }
+                
+                // Display geographic data info
+                if (chartData.geographic_data) {
+                    console.log('Geographic data available:', chartData.geographic_data);
+                    const geoInfo = document.createElement('div');
+                    geoInfo.className = 'metric-card';
+                    geoInfo.innerHTML = `
+                        <div class="metric-value">${chartData.geographic_data.total_points}</div>
+                        <div class="metric-label">Geographic Points</div>
+                    `;
+                    document.getElementById('metrics').appendChild(geoInfo);
+                }
+            })
+            .catch(error => {
+                console.error('Error loading chart data:', error);
+                document.body.innerHTML = `<div class="container"><h2>Error loading chart data</h2><p>${error.message}</p></div>`;
+            });
+
+        function displayMetrics(metrics) {
+            const metricsContainer = document.getElementById('metrics');
+            
+            const metricCards = [
+                { label: 'Total Posts', value: metrics.total_disaster_posts },
+                { label: 'Disaster Types', value: metrics.unique_disaster_types },
+                { label: 'Locations', value: metrics.unique_locations },
+                { label: 'Help Requests', value: metrics.help_requests_count },
+                { label: 'High Severity', value: metrics.high_severity_count },
+                { label: 'Avg Confidence', value: metrics.overall_confidence },
+                { label: 'Most Common', value: metrics.most_common_disaster }
+            ];
+            
+            metricCards.forEach(metric => {
+                const card = document.createElement('div');
+                card.className = 'metric-card';
+                card.innerHTML = `
+                    <div class="metric-value">${metric.value}</div>
+                    <div class="metric-label">${metric.label}</div>
+                `;
+                metricsContainer.appendChild(card);
+            });
+        }
+
+        function createChart(canvasId, chartConfig) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            // Merge default options with chart-specific options
+            const options = {
+                responsive: true,
+                maintainAspectRatio: true,
+                ...chartConfig.options
+            };
+            
+            new Chart(ctx, {
+                type: chartConfig.type,
+                data: chartConfig.data,
+                options: options
+            });
+        }
+    </script>
+</body>
+</html>

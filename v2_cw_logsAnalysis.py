@@ -10,7 +10,7 @@ class EdgeFunctionLogAnalyzer:
         """
         Initialize the log analyzer with CSV file path
         """
-        self.df = pd.read_csv(csv_file_path)
+        self.df = pd.read_csv("cw-logs-nov4-7hrs.csv")
         self.analysis_results = {}
     
     def parse_json_logs(self):
@@ -356,7 +356,7 @@ def main():
     """
     Main function to run the analysis
     """
-    csv_file_path = "cw-logs.csv"  # Your CSV file name
+    csv_file_path = "cw-logs-nov4-7hrs.csv"  # Your CSV file name
     
     try:
         analyzer = EdgeFunctionLogAnalyzer(csv_file_path)
